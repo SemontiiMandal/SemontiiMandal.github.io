@@ -1261,4 +1261,27 @@ body {
 }
 
 
+/* Make the iframe responsive */
+iframe {
+    width: 100%;  /* Set width to 100% for responsiveness */
+    height: 80vh; /* Set height to a portion of the viewport height */
+    max-width: 100%;  /* Prevent overflow if the width exceeds the container */
+    border: none; /* Remove borders */
+}
+
+/* Additional responsive styling for mobile */
+@media (max-width: 768px) {
+    iframe {
+        height: 90vh;  /* Increase height for mobile for better visibility */
+    }
+}
+
+/* Ensuring that the resume container (if any) has appropriate height */
+#resume-viewer {
+    height: auto;  /* Allow the height to adjust based on content */
+    min-height: 400px;  /* Minimum height for the resume container */
+    overflow: auto;  /* Allow scrolling if content overflows */
+    margin-top: 20px;  /* Space from the top */
+}
+
 
