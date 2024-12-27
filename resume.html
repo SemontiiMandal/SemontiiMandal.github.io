@@ -87,5 +87,18 @@
 			});
 		
 		</script>
+		<script>
+			const iframe = document.querySelector('iframe');
+		
+			const adjustIframeHeight = () => {
+				const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+				const contentHeight = iframeDoc.body.scrollHeight;
+				iframe.style.height = `${contentHeight}px`;
+			};
+		
+			// Adjust iframe height on load and resize
+			iframe.onload = adjustIframeHeight;
+			window.addEventListener('resize', adjustIframeHeight);
+		</script>
 	</body>
 </html>
