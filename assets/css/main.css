@@ -1260,5 +1260,149 @@ body {
     margin-bottom: 6em; /* Equal to the footer height */
 }
 
+/* Make the iframe responsive */
+iframe {
+    width: 100%;  /* Set width to 100% for responsiveness */
+    height: 80vh; /* Set height to a portion of the viewport height */
+    max-width: 100%;  /* Prevent overflow if the width exceeds the container */
+    border: none; /* Remove borders */
+}
+
+/* Additional responsive styling for mobile */
+@media (max-width: 768px) {
+    iframe {
+        height: 90vh;  /* Increase height for mobile for better visibility */
+    }
+}
+
+/* Ensuring that the resume container (if any) has appropriate height */
+#resume-viewer {
+    height: auto;  /* Allow the height to adjust based on content */
+    min-height: 400px;  /* Minimum height for the resume container */
+    overflow: auto;  /* Allow scrolling if content overflows */
+    margin-top: 20px;  /* Space from the top */
+}
+/* Make the iframe responsive */
+iframe {
+    width: 100%;  /* Set width to 100% for responsiveness */
+    height: 80vh; /* Set height to a portion of the viewport height */
+    max-width: 100%;  /* Prevent overflow if the width exceeds the container */
+    border: none; /* Remove borders */
+    display: block; /* Remove any default spacing around the iframe */
+}
+
+/* Additional responsive styling for mobile */
+@media (max-width: 768px) {
+    iframe {
+        height: 90vh;  /* Increase height for mobile for better visibility */
+    }
+}
+
+/* Ensuring that the resume container (if any) has appropriate height */
+#resume-viewer {
+    height: auto;  /* Allow the height to adjust based on content */
+    min-height: 400px;  /* Minimum height for the resume container */
+    max-height: 70vh;  /* Ensure it doesn't exceed the viewport height */
+    overflow: auto;  /* Allow scrolling if content overflows */
+    margin-top: 20px;  /* Space from the top */
+    padding: 10px;  /* Optional padding inside the container */
+    border: 1px solid #ccc;  /* Optional: border for visual effect */
+}
+
+/* Prevent horizontal scrolling on the page */
+body {
+    overflow-x: hidden;
+}
+
+/* General styling for iframe */
+iframe {
+    width: 100%; /* Responsive width */
+    height: 80vh; /* Default for larger screens */
+    border: none; /* Clean borders */
+    display: block; /* Prevent default spacing around the iframe */
+}
+
+/* Styling for resume container */
+#resume-viewer {
+    height: auto; /* Allow dynamic height adjustment */
+    max-height: 90vh; /* Ensure it doesn't exceed viewport height */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    margin: 0 auto; /* Center the container */
+    padding: 10px; /* Optional padding for better design */
+    border: 1px solid #ccc; /* Optional border for clarity */
+    box-sizing: border-box; /* Include padding in total size */
+}
+
+/* Desktop-specific adjustments */
+@media (min-width: 1024px) {
+    #resume-viewer {
+        max-height: 85vh; /* Increase height for better visibility */
+    }
+    iframe {
+        height: 85vh; /* Match the container */
+    }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    #resume-viewer {
+        max-height: 95vh; /* Use more viewport space for mobile */
+    }
+    iframe {
+        height: 95vh; /* Make full use of container space */
+    }
+}
+
+/* Prevent horizontal scrolling */
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+/* General styling for iframe */
+iframe {
+    width: 100%; /* Responsive width */
+    height: auto; /* Adjust to content height */
+    min-height: 400px; /* Ensure a reasonable minimum height */
+    border: none; /* Clean borders */
+    display: block; /* Prevent spacing issues */
+}
+
+/* Styling for resume container */
+#resume-viewer {
+    height: auto; /* Dynamic height based on content */
+    max-height: 100vh; /* Prevent overflow beyond viewport height */
+    overflow-y: auto; /* Enable scrolling for content that overflows */
+    margin: 0 auto; /* Center the container */
+    padding: 10px; /* Optional padding for better design */
+    border: 1px solid #ccc; /* Optional border for clarity */
+    box-sizing: border-box; /* Include padding in total size */
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    #resume-viewer {
+        height: auto; /* Adjust height dynamically to fit content */
+        max-height: 95vh; /* Prevent from taking more than 95% of the viewport */
+        padding: 5px; /* Slightly reduce padding for compact layout */
+    }
+
+    iframe {
+        height: auto; /* Adjust height dynamically based on content */
+        min-height: 400px; /* Ensure the iframe doesn’t collapse */
+    }
+}
+
+/* Prevent horizontal scrolling */
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
 
 
