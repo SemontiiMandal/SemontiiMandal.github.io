@@ -1,58 +1,408 @@
-<!DOCTYPE HTML>
+<!doctype html>
+<html lang="en">
+<head>
 
-<html>
-	<head>
-		<title>Semontii Mandal</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<div id="wrapper">
-			<div id="bg"></div>
-			<div id="overlay"></div>
-			<div id="main">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-17P7VBGTPH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-				
-				<!-- Header -->
-					<header id="header">
-						<h1>Semontii Mandal</h1>
-						<p>Electrical Engineering &nbsp;&bull;&nbsp; University of Toronto &nbsp;&bull;&nbsp; Class of '28 + PEY</p>
-						<nav>
-							<ul class="top-menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="about.html">About Me</a></li>
-								<li><a href="projects.html">Projects</a></li>
-								<li><a href="resume.html" target="_blank">Resume</a></li>
-							</ul>
-						</nav>					
-						<nav>
-							<ul>
-								<li><a href="https://github.com/SemontiiMandal" class="icon brands fa-github" target="_blank">
-									<span class="label">GitHub</span></a>
-								</li>
-								<li><a href="mailto:semontii.mandal@mail.utoronto.ca" class="icon solid fa-envelope" target="_blank">
-									<span class="label">Email</span></a>
-								</li>
-								<!-- Replace with your LinkedIn profile link -->
-								<li><a href="https://www.linkedin.com/in/semontii-mandal/" class="icon brands fa-linkedin" target="_blank">
-									<span class="label">LinkedIn</span></a>
-							</ul>
-						</nav>
-					</header>
+  gtag('config', 'G-17P7VBGTPH');
+</script>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<span class="copyright">&copy; Semontii Mandal</span>
-					</footer>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sam — Embedded Engineer</title>
+<style>
+  :root{
+    --bg-1:#020617;
+    --bg-2:#06122a;
+    --neon-1:#00e5ff;
+    --neon-2:#0f6fff;
+    --muted:#9aa7b6;
+  }
+  html,body{
+    margin:0; 
+    height:100%; 
+    font-family:Inter, sans-serif; 
+    background:linear-gradient(180deg,var(--bg-1),var(--bg-2)); 
+    color:white;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-			</div>
-		</div>
-		<script>
-			window.onload = function() { document.body.classList.remove('is-preload'); }
-			window.ontouchmove = function() { return false; }
-			window.onorientationchange = function() { document.body.scrollTop = 0; }
-		</script>
-	</body>
+  /* Top-right tabs */
+  nav.tabs {
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    z-index: 100;
+  }
+  nav.tabs a {
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon-1);
+    transition: 
+      background-color 0.3s ease, 
+      box-shadow 0.4s ease,
+      color 0.3s ease;
+  }
+  nav.tabs a:hover, nav.tabs a:focus {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 10px var(--neon-1), 0 0 20px var(--neon-2);
+    outline: none;
+  }
+
+  nav.tabs a.active { background:var(--neon-1); color:#04122a; }
+  /* Hamburger menu button - hidden on desktop */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 110;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hamburger span {
+    display: block;
+    height: 4px;
+    background: var(--neon-1);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Sidebar container for mobile nav */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background: var(--bg-2);
+    box-shadow: -5px 0 20px rgba(0,229,255,0.4);
+    padding: 3rem 1rem 1rem 1rem;
+    display: none; /* hide sidebar by default */
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 105;
+    overflow-y: auto;
+  }
+  .sidebar.show {
+    display: flex; /* show sidebar when active */
+  }
+  .sidebar a {
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon-1);
+    transition: background-color 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
+  }
+  .sidebar a:hover, .sidebar a:focus {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 10px var(--neon-1), 0 0 20px var(--neon-2);
+    outline: none;
+  }
+
+  /* Desktop hero grid with GIF on left, text on right */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    min-height:100vh;
+    align-items:center;
+    gap:2rem;
+    padding:2rem 4rem;
+  }
+  /* Swap order: GIF first, intro second */
+  .gif-wrap {
+    order: 0;
+    justify-content: flex-start;
+    background: transparent; /* remove any bg */
+    box-shadow: none; /* remove shadow on desktop */
+  }
+  .intro {
+    order: 1;
+    text-align: left;
+  }
+
+  /* Make gif bigger on desktop */
+  .gif-wrap img {
+    max-width: 100%;
+    max-height: 80vh; /* bigger */
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,229,255,0.6);
+    object-fit: contain;
+    background-color: transparent;
+    display: block;
+  }
+
+  /* Mobile: stack content and integrate text + animation */
+  @media(max-width:900px){ 
+    .hero{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      gap: 1rem;
+    }
+
+    .intro,
+    .gif-wrap {
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+
+    .intro {
+      text-align: center;
+      background: rgba(0, 229, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem 1rem 1.5rem;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+    }
+
+    .gif-wrap {
+      margin-top: 0;
+      padding: 0 1rem 1.5rem 1rem;
+      box-shadow: 0 0 20px rgba(0,229,255,0.3);
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      justify-content: center;
+      background: transparent; /* keep bg transparent here or you can keep the subtle glow */
+    }
+
+    .gif-wrap img {
+      max-height: 250px;
+      max-width: 100%;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    /* Reset order on mobile for natural stacking */
+    .gif-wrap, .intro {
+      order: initial;
+    }
+
+    /* Hide the desktop tabs on mobile */
+    nav.tabs {
+      display: none;
+    }
+
+    /* Show hamburger menu */
+    .hamburger {
+      display: flex;
+    }
+  }
+
+  /* Left content */
+  .intro h1{
+    font-size: clamp(36px,5vw,60px);
+    margin:0;
+    background:linear-gradient(90deg,var(--neon-2),var(--neon-1));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .typewriter{
+    margin-top:1rem;
+    font-size:1.5rem;
+    font-weight:600;
+    color:#dff7ff;
+    min-height: 2rem; /* prevent layout shift */
+  }
+  .cursor{
+    display:inline-block;
+    width:2px;
+    height:1.4rem;
+    background:var(--neon-1);
+    animation:blink 1s infinite;
+    vertical-align:middle;
+  }
+  @keyframes blink{
+    50%{opacity:0}
+  }
+  .subtext{
+    margin-top:1rem;
+    color:var(--muted);
+    max-width:500px;
+  }
+  .buttons{
+    margin-top:1.5rem;
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+  }
+  @media(max-width:900px){
+    .buttons {
+      justify-content: center;
+    }
+  }
+  .btn{
+    padding:0.7rem 1.2rem;
+    border-radius:8px;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s;
+    user-select:none;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg,var(--neon-1),var(--neon-2));
+    color:#04122a;
+  }
+  .btn-primary:hover{
+    box-shadow:0 0 20px var(--neon-2);
+  }
+  .btn-outline{
+    border:1px solid var(--neon-1);
+    color:var(--neon-1);
+  }
+  .btn-outline:hover{
+    background:rgba(0,229,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<!-- Desktop tabs -->
+<nav class="tabs" aria-label="Main navigation">
+  <a href="index.html" tabindex="0" class="active">Home</a>
+  <a href="skills.html" tabindex="0">Skills</a>
+  <a href="experience.html" tabindex="0">Experience</a>
+  <a href="projects.html" tabindex="0">Projects</a>
+  <!--<a href="pcbs.html" tabindex="0">PCBs</a>-->
+  <a href="about.html" tabindex="0">About</a>
+  <a href="resume.html" tabindex="0">Resume</a>
+  <a href="contact.html" tabindex="0">Contact</a>
+</nav>
+
+<!-- Hamburger menu for mobile -->
+<div class="hamburger" aria-label="Open navigation menu" role="button" tabindex="0" aria-expanded="false" aria-controls="mobile-menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- Sidebar for mobile navigation -->
+<nav id="mobile-menu" class="sidebar" aria-label="Mobile navigation" hidden>
+  <a href="index.html" tabindex="0">Home</a>
+  <a href="skills.html" tabindex="0">Skills</a>
+  <a href="experience.html" tabindex="0">Experience</a>
+  <a href="projects.html" tabindex="0">Projects</a>
+  <!--<a href="pcbs.html" tabindex="0">PCBs</a>-->
+  <a href="about.html" tabindex="0">About</a>
+  <a href="resume.html" tabindex="0">Resume</a>
+  <a href="contact.html" tabindex="0">Contact</a>
+</nav>
+
+<section class="hero">
+  <!-- Right text content -->
+  <div class="intro">
+    <h1>Hi, I'm Sam!</h1>
+    <div class="typewriter" aria-live="polite" aria-atomic="true">
+      <span id="type-text"></span><span class="cursor" aria-hidden="true"></span>
+    </div>
+    <p class="subtext">
+      I’m an Electrical & Computer Engineering student passionate about embedded systems, real-time firmware, PCB design, and leveraging AI/ML to create impactful solutions.
+    </p>
+    <div class="buttons">
+      <a href="projects.html" class="btn btn-primary">View Projects</a>
+      <a href="https://drive.google.com/uc?export=download&id=17wiAO_E45ukc-3iXJGsEkIY9C-cJDyaL" class="btn btn-outline" download target="_blank" rel="noopener noreferrer" aria-label="Download Resume PDF">
+Download Resume</a>
+    </div>
+  </div>
+
+  <!-- Left animated gif -->
+  <div class="gif-wrap">
+    <img src="giphy.gif" alt="Animated PCB Background" />
+  </div>
+</section>
+
+<footer style="text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem;">
+  &copy; Sam — ECE @ UofT
+</footer>
+
+<script>
+  // Typewriter effect cycling phrases
+  const phrases = [
+  "Designing Embedded Systems & Firmware.",
+  "Engineering PCBs & Hardware Solutions.",
+  "Building AI/ML-Powered Systems."
+];
+  const el = document.getElementById("type-text");
+  let phraseIndex = 0, letterIndex = 0, deleting = false;
+
+  function type(){
+    const currentPhrase = phrases[phraseIndex];
+    if(!deleting){
+      el.textContent = currentPhrase.slice(0, letterIndex + 1);
+      letterIndex++;
+      if(letterIndex === currentPhrase.length){
+        setTimeout(() => {
+          deleting = true;
+          type();
+        }, 1200);
+        return;
+      }
+    } else {
+      el.textContent = currentPhrase.slice(0, letterIndex - 1);
+      letterIndex--;
+      if(letterIndex === 0){
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
+    }
+    setTimeout(type, deleting ? 40 : 70);
+  }
+  type();
+
+  // Hamburger menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const sidebar = document.getElementById('mobile-menu');
+
+  function toggleMenu(){
+    const isOpen = sidebar.classList.toggle('show');
+    if(isOpen) {
+      sidebar.removeAttribute('hidden');
+    } else {
+      sidebar.setAttribute('hidden', '');
+    }
+    hamburger.setAttribute('aria-expanded', isOpen);
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+
+  // Close sidebar when clicking a link inside sidebar
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      sidebar.classList.remove('show');
+      sidebar.setAttribute('hidden', '');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+</script>
+
+</body>
 </html>

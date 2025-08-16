@@ -1,62 +1,325 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sam — About Me</title>
 
-<html>
-	<head>
-		<title>Semontii Mandal</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<div id="wrapper">
-			<div id="bg"></div>
-			<div id="overlay"></div>
-			<div id="main">	
-				<!-- Header -->
-                <header id="header">
-                    <h1>About Me</h1>
-                    <p style="font-weight: bold; line-height: 2.0;">I’m Semontii, and I’m on a mission to harness technology to create meaningful change.</p>
-                    <p> I believe that technology has the power to transform lives and address the challenges we face. Be it through Robotics or Machine Learning, I’m dedicated to developing ideas that make a real difference in the world.
-                        
-                        For me, it’s not just about creating new technologies—it’s about creating opportunities, improving lives, and pushing boundaries. Every idea, every project, is a chance to bring about change, to shape the future, and to build something that truly matters.
-                        
-                        With every step I take, my purpose remains clear: to use technology not only to advance, but to inspire and empower, to solve problems, and to leave a lasting, positive impact on the world.</p>
-                    <nav>
-                        <ul class="top-menu">
-                            <li><a href="index.html">Home</a></li>
-								<li><a href="about.html">About Me</a></li>
-								<li><a href="projects.html">Projects</a></li>
-								<li><a href="resume.html" target="_blank">Resume</a></li>
-                        </ul>
-                    </nav>					
-                    <nav>
-                        <ul>
-                            <li><a href="https://github.com/SemontiiMandal" class="icon brands fa-github" target="_blank">
-                                <span class="label">GitHub</span></a>
-                            </li>
-                            <li><a href="mailto:semontii.mandal@mail.utoronto.ca" class="icon solid fa-envelope" target="_blank">
-                                <span class="label">Email</span></a>
-                            </li>
-                            <!-- Replace with your LinkedIn profile link -->
-                            <li><a href="https://www.linkedin.com/in/semontii-mandal/" class="icon brands fa-linkedin" target="_blank">
-                                <span class="label">LinkedIn</span></a>
-                        </ul>
-                    </nav>
-                </header>
-           
+<style>
+  :root {
+    --bg-1: #020617;
+    --bg-2: #06122a;
+    --neon-1: #00e5ff;
+    --neon-2: #0f6fff;
+    --muted: #9aa7b6;
+  }
 
-				<!-- Footer -->
-					<footer id="footer">
-						<span class="copyright">&copy; Semontii Mandal</span>
-					</footer>
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, sans-serif;
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    color: white;
+    overflow-x: hidden;
+  }
 
-			</div>
-		</div>
-		<script>
-			window.onload = function() { document.body.classList.remove('is-preload'); }
-			window.ontouchmove = function() { return false; }
-			window.onorientationchange = function() { document.body.scrollTop = 0; }
-		</script>
-	</body>
+  /* === NAVBAR === */
+  nav.tabs {
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    z-index: 100;
+  }
+  nav.tabs a {
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon-1);
+    user-select: none;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  nav.tabs a:hover,
+  nav.tabs a:focus {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 10px var(--neon-1);
+    outline: none;
+  }
+  nav.tabs a.active {
+    background: var(--neon-1);
+    color: #04122a;
+  }
+
+  /* === HAMBURGER === */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 110;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hamburger span {
+    display: block;
+    height: 4px;
+    background: var(--neon-1);
+    border-radius: 2px;
+  }
+
+  /* === SIDEBAR MOBILE MENU === */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background: var(--bg-2);
+    padding: 3rem 1rem 1rem 1rem;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 105;
+    overflow-y: auto;
+  }
+  .sidebar.show {
+    display: flex;
+  }
+  .sidebar a {
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon-1);
+    user-select: none;
+  }
+  .sidebar a.active {
+    background: var(--neon-1);
+    color: #04122a;
+  }
+  .sidebar a:hover,
+  .sidebar a:focus {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 10px var(--neon-1);
+    outline: none;
+  }
+
+  /* === MAIN === */
+  main {
+    max-width: 1200px;
+    margin: 6rem auto 4rem;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    background: linear-gradient(90deg, var(--neon-2), var(--neon-1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-right: 3px solid var(--neon-1);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  /* === GLASS CARDS GRID === */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .cards .bottom-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-items: center;
+  }
+
+  .card {
+    position: relative;
+    background: rgba(0, 229, 255, 0.06);
+    border: 1px solid rgba(0,229,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 0 30px rgba(0,229,255,0.08);
+    overflow: hidden;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.7s ease;
+    width: 100%;
+    max-width: 320px;
+  }
+  .card.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .card h2 {
+    margin-top: 0;
+    color: var(--neon-1);
+    font-size: 1.5rem;
+  }
+  .card p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 1rem 0 0;
+  }
+
+  /* Neon glow animated lines */
+  .card::before,
+  .card::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-2), var(--neon-1));
+    top: 0;
+    left: 0;
+    transform: rotate(5deg);
+    opacity: 0.6;
+  }
+  .card::after {
+    top: auto;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    transform: rotate(-5deg);
+  }
+
+  /* Hover glow effect */
+  .card:hover {
+    box-shadow: 0 0 40px var(--neon-1), 0 0 80px var(--neon-2);
+    transform: translateY(-5px);
+    transition: all 0.4s ease;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    nav.tabs { display: none; }
+    .hamburger { display: flex; }
+    main { margin: 6rem 1rem 2rem; }
+    .cards { grid-template-columns: 1fr; gap: 1.5rem; }
+    .cards .bottom-row { grid-template-columns: 1fr; margin-top: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabs" aria-label="Main navigation">
+  <a href="index.html">Home</a>
+  <a href="skills.html">Skills</a>
+  <a href="experience.html">Experience</a>
+  <a href="projects.html">Projects</a>
+  <a href="about.html" class="active">About</a>
+  <a href="resume.html">Resume</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="hamburger" aria-label="Open navigation menu" role="button" tabindex="0" aria-expanded="false" aria-controls="mobile-menu">
+  <span></span><span></span><span></span>
+</div>
+
+<nav id="mobile-menu" class="sidebar" aria-label="Mobile navigation" hidden>
+  <a href="index.html">Home</a>
+  <a href="skills.html">Skills</a>
+  <a href="experience.html">Experience</a>
+  <a href="projects.html">Projects</a>
+  <a href="about.html" class="active">About</a>
+  <a href="resume.html">Resume</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main>
+  <h1 id="typing-title"></h1>
+
+  <div class="cards">
+    <div class="card">
+      <h2>Who I Am</h2>
+      <p>I’m Sam. I build technology that matters, solving problems, pushing boundaries, and leaving a mark.</p>
+    </div>
+    <div class="card">
+      <h2>What I Do</h2>
+      <p>From embedded systems and PCBs to AI models and intelligent agents, I design, prototype, and refine tools where hardware and software meet purpose.</p>
+    </div>
+    <div class="card">
+      <h2>How I Work</h2>
+      <p>I thrive on challenges and take initiative, whether tackling complex problems or supporting my team. I foster collaboration, accountability, and trust.</p>
+    </div>
+
+    <!-- Bottom row with 2 cards -->
+    <div class="bottom-row">
+      <div class="card">
+        <h2>Why I Build</h2>
+        <p>I believe technology should inspire, empower, and make a difference. My mission: create technology that matters and leave the world better than I found it.</p>
+      </div>
+      <div class="card">
+        <h2>School & Study</h2>
+        <p>I'm a Second Year Electrical Engineering Student at the University of Toronto Engineering, Department of Electricala and Computer Engineering (ECE).</p>
+      </div>
+    </div>
+  </div>
+</main>
+<footer style="text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem;">
+  &copy; Sam — ECE @ UofT
+</footer>
+
+<script>
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const sidebar = document.getElementById('mobile-menu');
+  function toggleMenu(){
+    const isOpen = sidebar.classList.toggle('show');
+    if(isOpen) sidebar.removeAttribute('hidden'); else sidebar.setAttribute('hidden','');
+    hamburger.setAttribute('aria-expanded', isOpen);
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    sidebar.classList.remove('show'); sidebar.setAttribute('hidden',''); hamburger.setAttribute('aria-expanded', false);
+  }));
+
+  // Typing effect for title
+  const titleEl = document.getElementById('typing-title');
+  const titleText = "About Me";
+  let i = 0;
+  function typeWriter() {
+    if (i < titleText.length) {
+      titleEl.textContent += titleText.charAt(i);
+      i++;
+      setTimeout(typeWriter, 100);
+    }
+  }
+  typeWriter();
+
+  // Reveal cards on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.card').forEach(el => observer.observe(el));
+</script>
+
+</body>
 </html>

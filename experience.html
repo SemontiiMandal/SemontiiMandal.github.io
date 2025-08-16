@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sam — Experience</title>
+<style>
+  :root{
+    --bg-1:#020617;
+    --bg-2:#06122a;
+    --neon-1:#00e5ff;
+    --neon-2:#0f6fff;
+    --muted:#9aa7b6;
+  }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: Inter, sans-serif;
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    color: white;
+    overflow-x: hidden;
+  }
+
+  nav.tabs {
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    z-index: 100;
+  }
+  nav.tabs a {
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon-1);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.4s ease,
+      color 0.3s ease;
+  }
+  nav.tabs a:hover, nav.tabs a:focus {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 10px var(--neon-1), 0 0 20px var(--neon-2);
+    outline: none;
+  }
+  nav.tabs a.active {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 15px var(--neon-2);
+  }
+
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 110;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hamburger span {
+    display: block;
+    height: 4px;
+    background: var(--neon-1);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background: var(--bg-2);
+    box-shadow: -5px 0 20px rgba(0,229,255,0.4);
+    padding: 3rem 1rem 1rem 1rem;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 105;
+    overflow-y: auto;
+  }
+  .sidebar.show {
+    display: flex;
+  }
+  .sidebar a {
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon-1);
+    transition: background-color 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
+  }
+  .sidebar a:hover, .sidebar a:focus {
+    background: var(--neon-1);
+    color: #04122a;
+    box-shadow: 0 0 10px var(--neon-1), 0 0 20px var(--neon-2);
+    outline: none;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 8rem auto 4rem;
+    padding: 2rem;
+    background: rgba(0, 229, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    background: linear-gradient(90deg, var(--neon-2), var(--neon-1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+  }
+  .job {
+    margin-bottom: 2rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px rgba(0,229,255,0.2);
+    transition: box-shadow 0.3s ease;
+  }
+  .job:hover {
+    box-shadow: 0 0 40px var(--neon-2);
+  }
+  .job-title {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--neon-1);
+    margin-bottom: 0.3rem;
+  }
+  .job-company {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .job-dates {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .job-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    user-select: none;
+  }
+
+  @media(max-width:600px) {
+    main {
+      margin: 6rem 1rem 2rem;
+      padding: 1.5rem;
+    }
+  }
+  @media(max-width:900px) {
+    nav.tabs {
+      display: none;
+    }
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabs" aria-label="Main navigation">
+  <a href="index.html">Home</a>
+  <a href="skills.html">Skills</a>
+  <a href="experience.html" class="active">Experience</a>
+  <a href="projects.html">Projects</a>
+  <!--<a href="pcbs.html">PCBs</a>-->
+  <a href="about.html">About</a>
+  <a href="resume.html">Resume</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="hamburger" aria-label="Open navigation menu" role="button" tabindex="0" aria-expanded="false" aria-controls="mobile-menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<nav id="mobile-menu" class="sidebar" aria-label="Mobile navigation" hidden>
+  <a href="index.html" tabindex="0">Home</a>
+  <a href="skills.html" tabindex="0">Skills</a>
+  <a href="experience.html" class="active" tabindex="0">Experience</a>
+  <a href="projects.html" tabindex="0">Projects</a>
+  <!--<a href="pcbs.html" tabindex="0">PCBs</a>-->
+  <a href="about.html" tabindex="0">About</a>
+  <a href="resume.html" tabindex="0">Resume</a>
+  <a href="contact.html" tabindex="0">Contact</a>
+</nav>
+
+<main>
+  <h1>Experience</h1>
+<div class="job">
+  <div class="job-title">Summer Research Intern – Guenther Lab</div>
+  <div class="job-company">First Year Summer Research Fellow, University of Toronto</div>
+  <div class="job-dates">May 2024 – Present</div>
+  <div class="job-location">Toronto, ON</div>
+  <div class="job-desc">
+    Developed real-time firmware on Arduino Portenta H7 to control Faulhaber motors via CAN Bus using CANopen (mbed C++). Designed dual-protocol system integrating Matrix Orbital GTT touchscreen (I2C) with synchronized motor CAN Bus. Created Graphical User Interface using GTT Designer and C++ libraries to enable intuitive surgeon-device interaction, integrating user-centric UX principles for clinical applications. Implemented emergency stop logic via interrupts and motor synchronization with 10ms resolution. Designing PCB modules in Altium Designer for custom control interfaces.
+  </div>
+</div>
+
+<div class="job">
+  <div class="job-title">Team Lead, ZenVision – APS112</div>
+  <div class="job-company">Engineering Strategies and Practices (ESP), University of Toronto</div>
+  <div class="job-dates">Jan 2025 – Apr 2025</div>
+  <div class="job-location">Toronto, ON</div>
+  <div class="job-desc">
+    Designed assistive smart glasses for a child with ADHD to detect verbal outbursts via real-time audio processing. Built MFCC-based Convolutional Neural Network (CNN) in TensorFlow deployed on ESP32; achieved latency: 1.93s. Developed real-time Firebase dashboard (HTML/CSS/JS, Plotly.js) for behavioral tracking. Selected Top 20 of 187+ teams in UofT Engineering Showcase.
+  </div>
+</div>
+
+<div class="job">
+  <div class="job-title">Design Team Member — Software/Embedded Dev, Breathing Biofeedback</div>
+  <div class="job-company">University of Toronto Biomedical Engineering Design Team (UTBIOME)</div>
+  <div class="job-dates">Sept 2024 – Present</div>
+  <div class="job-location">Toronto, ON</div>
+  <div class="job-desc">
+    Designed wearable breathing biofeedback device (stretch sensors, Arduino, FFT, ML) for early COPD detection. Built cross-platform mobile apps (iOS/Objective-C, Android/Java) with Bluetooth control & real-time data display.
+  </div>
+</div>
+
+<div class="job">
+  <div class="job-title">AI/ML Research Intern</div>
+  <div class="job-company">Applied Physics, Electrical Engineering Dept., University of Calcutta</div>
+  <div class="job-dates">Oct 2022 – Jul 2024</div>
+  <div class="job-location">Kolkata, India</div>
+  <div class="job-desc">
+    Analyzed thermocouple sensor data using polynomial regression and ML models (SVM, KNN, Random Forest), achieving 99.8% accuracy. Enhanced biomedical device performance via optimized feature engineering and model evaluation.
+  </div>
+</div>
+
+
+  <!-- Add more experience entries as needed -->
+
+</main>
+
+<footer style="text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem;">
+  &copy; Sam — ECE @ UofT
+</footer>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const sidebar = document.getElementById('mobile-menu');
+
+  function toggleMenu(){
+    const isOpen = sidebar.classList.toggle('show');
+    if(isOpen) {
+      sidebar.removeAttribute('hidden');
+    } else {
+      sidebar.setAttribute('hidden', '');
+    }
+    hamburger.setAttribute('aria-expanded', isOpen);
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      sidebar.classList.remove('show');
+      sidebar.setAttribute('hidden', '');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+</script>
+
+</body>
+</html>
