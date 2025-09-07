@@ -129,111 +129,187 @@
     overflow: hidden;
   }
 
-  /* The dotted horizontal center line */
-.belt-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 4px; /* thicker */
-  background-image: radial-gradient(var(--neon-1) 3px, transparent 3px); /* bigger dots */
-  background-size: 16px 4px;
-  transform: translateY(-50%);
-  z-index: 0;
-}
-
-
-  /* Conveyor belt container */
-.belt-container {
-  width: 100%;
-  overflow-x: hidden; /* only hide horizontally */
-  overflow-y: visible; /* allow vertical overflow */
-  position: relative;
-  z-index: 1;
-  padding-top: 4rem; /* extra space */
-  padding-bottom: 4rem;
-}
-
-  /* Scrolling track */
-.belt-scroll {
-  display: flex;
-  gap: 4rem;
-  padding: 2rem 0;
-  will-change: transform;
-  /* animation removed */
-  touch-action: pan-y; /* allow vertical scroll normally but horizontal drag handled manually */
-  cursor: grab;
-  user-select: none;
-}
-.belt-scroll:active {
-  cursor: grabbing;
-}
-
-  .belt-container:hover .belt-scroll {
-    animation-play-state: paused;
-    cursor: pointer;
+  .page-toggle {
+    position: absolute;
+    top: 4.5rem; /* just below navbar */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    border: 2px solid var(--neon-1);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 5;
   }
 
-  @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  .page-toggle .toggle-btn {
+    padding: 0.5rem 1.2rem;
+    background: transparent;
+    color: var(--neon-1);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
   }
 
-  /* Project nodes */
-  .project-node {
+  .page-toggle .toggle-btn:hover {
+    background: rgba(0, 229, 255, 0.15);
+  }
+
+  .page-toggle .toggle-btn.active {
+    background: var(--neon-1);
+    color: var(--bg-2);
+  }
+
+  /* Deck container */
+  .deck-wrap {
+    width: min(1200px, 95%);
+    max-width: 1100px;
+    height: 560px;
     position: relative;
-    flex: 0 0 220px;
-    background: var(--bg-2);
-    border: 1px solid var(--neon-1);
-    border-radius: 12px;
-    box-shadow: 0 0 12px var(--neon-1);
+    perspective: 1500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  /* Center dotted line behind deck (subtle) */
+  .belt-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-image: radial-gradient(var(--neon-1) 3px, transparent 3px);
+    background-size: 16px 4px;
+    transform: translateY(-50%);
+    z-index: 0;
+    opacity: 0.06;
+  }
+
+  /* Card styles */
+  .deck {
+    width: 540px;
+    height: 380px;
+    position: relative;
+    transform-style: preserve-3d;
+    touch-action: pan-y;
+  }
+
+  .card {
+    --offsetY: 0px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 440px;
+    max-width: 88%;
+    height: 300px;
+    transform: translate(-50%, -50%) translateY(var(--offsetY)) scale(1) rotateZ(0deg);
+    background: linear-gradient(180deg, rgba(6,18,42,0.95), rgba(2,6,23,0.95));
+    border-radius: 14px;
+    border: 1px solid rgba(0,229,255,0.12);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 18px rgba(15,111,255,0.06);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    padding: 1rem 1rem 1.2rem;
+    padding: 1.2rem;
     text-align: center;
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     user-select: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: grab;
+    transition: transform 300ms cubic-bezier(.2,.9,.3,1), box-shadow 200ms ease, opacity 200ms ease;
+    will-change: transform, opacity;
     z-index: 1;
+    background: linear-gradient(135deg, #0a1f44, #021026); /* deep blue gradient */
+  border-radius: 16px;
+  border: 2px solid rgba(115, 164, 206, 0.642); /* brighter, semi-transparent cyan edge */
+  box-shadow:
+    0 20px 60px rgba(32, 124, 181, 0.514),
+    0 0 30px rgba(61, 113, 192, 0.2); /* slightly stronger glow for edges */
   }
-  .project-node:hover,
-  .project-node:focus-visible {
-    outline: none;
-    transform: scale(1.1);
-    box-shadow: 0 0 25px var(--neon-2);
-  }
-  .project-node h3 {
-    margin: 0 0 0.3rem;
-    font-size: 1.1rem;
-    line-height: 1.2;
-  }
-  .project-node p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: var(--neon-1);
-    opacity: 0.8;
+
+  .card:active { cursor: grabbing; }
+
+  .card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.25rem;
     line-height: 1.1;
   }
+  .card p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--neon-1);
+    opacity: 0.9;
+    line-height: 1.1;
+    font-weight: 600;
+  }
 
-  /* Alternate vertical positions */
-.project-node:nth-child(odd) {
-  margin-bottom: 3rem;
-  margin-top: 0;
-  transform: translateY(-5rem);
+  /* small project meta at bottom */
+  .card .meta {
+    position: absolute;
+    bottom: 14px;
+    left: 18px;
+    right: 18px;
+    text-align: left;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* top card elevation */
+  .card.top {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(8, 106, 253, 0.12);
+    cursor: grab;
+    box-shadow:
+    0 25px 70px rgba(0,0,0,0.75),
+    0 0 35px rgba(15,111,255,0.35),
+    0 0 8px rgba(0,229,255,0.5) inset; /* soft cyan inset glow around edges */
+  }
+.card:not(.top) {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45), 0 0 12px rgba(0,111,255,0.05);
 }
 
-.project-node:nth-child(even) {
-  margin-top: 3rem;
-  margin-bottom: 0;
-  transform: translateY(3rem);
-}
 
+  /* offscreen animation helpers */
+  .fly-left { transition: transform 450ms cubic-bezier(.08,.7,.35,1), opacity 350ms ease; transform: translate(-150vw, -20vh) rotateZ(-25deg) scale(0.95); opacity: 0; }
+  .fly-right { transition: transform 450ms cubic-bezier(.08,.7,.35,1), opacity 350ms ease; transform: translate(150vw, -10vh) rotateZ(25deg) scale(0.95); opacity: 0; }
+  .fly-up { transition: transform 450ms cubic-bezier(.08,.7,.35,1), opacity 350ms ease; transform: translate(-5vw, -150vh) rotateZ(-6deg) scale(0.95); opacity: 0; }
 
-  /* MODAL */
+  
+
+  /* small hint */
+  .deck-hint {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 0.9rem;
+    z-index: 4;
+  }
+
+  /* RESPONSIVE */
+  @media(max-width:900px) {
+    nav.tabs { display: none; }
+    .hamburger { display: flex; }
+    main#projects-main {
+      padding: 5rem 1rem 4rem;
+    }
+    .deck-wrap { height: 480px; }
+    .deck { width: 90%; height: 320px; }
+    .card { width: 90%; height: 260px; }
+    .deck-hint { bottom: -46px; font-size: 0.9rem; }
+  }
+
+  @media(max-width:480px) {
+    .deck-wrap { height: 420px; }
+    .deck { height: 300px; }
+    .card { height: 240px; }
+    .page-toggle { top: 5.2rem; }
+  }
+
+  /* Modal / other styles kept unchanged */
   .modal {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -333,122 +409,7 @@
     fill: currentColor;
   }
 
-  /* RESPONSIVE */
-  @media(max-width:900px) {
-    .page-toggle {
-    width: 90%;             /* container takes most of screen */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;          /* keep side by side */
-  }
-
-  .page-toggle .toggle-btn {
-    flex: 1 1 0;            /* make all buttons equal width */
-    text-align: center;
-    padding: 0.6rem 0;      /* reduce horizontal padding, width is now flex-based */
-    font-size: 1rem;
-  }
-    nav.tabs { display: none; }
-    .hamburger { display: flex; }
-    main#projects-main {
-      padding: 5rem 1rem 4rem;
-    }
-    .belt-scroll {
-      gap: 2rem;
-      padding: 1rem 0;
-    }
-   .project-node {
-  flex: 0 0 160px;
-  font-size: 0.85rem;       /* slightly smaller text */
-  padding: 0.4rem 0.6rem;   /* less padding inside box */
-}
-
-.project-node h3 {
-  font-size: 0.95rem;       /* slightly smaller heading */
-}
-    
-/* Odd nodes (above belt) */
-.project-node:nth-child(odd) {
-  margin-bottom: 4rem; /* pushes node further from belt */
-}
-
-.project-node:nth-child(odd)::before {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 0.8rem;
-}
-
-/* Even nodes (below belt) */
-.project-node:nth-child(even) {
-  margin-top: 5rem; /* pushes node further from belt */
-}
-
-.project-node:nth-child(even)::before {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 0.8rem;
-}
-
-
-
-  }
-
-.page-toggle {
-  position: absolute;
-  top: 4.5rem; /* just below navbar */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  border: 2px solid var(--neon-1);
-  border-radius: 8px;
-  overflow: hidden;
-  z-index: 5;
-}
-
-.page-toggle .toggle-btn {
-  padding: 0.5rem 1.2rem;
-  background: transparent;
-  color: var(--neon-1);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.page-toggle .toggle-btn:hover {
-  background: rgba(0, 229, 255, 0.15);
-}
-
-.page-toggle .toggle-btn.active {
-  background: var(--neon-1);
-  color: var(--bg-2);
-}
-
-/* Base connector line style */
-.project-node::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 2px; /* thickness of the vertical line */
-  background: var(--neon-1);
-  transform: translateX(-50%);
-  z-index: -1; /* behind the node */
-}
-
-/* For nodes ABOVE the belt (odd ones) - line goes DOWN to belt */
-.project-node:nth-child(odd)::before {
-  top: 100%; /* start from bottom of node */
-  height: calc(1.8rem); /* length to reach belt from top-offset nodes */
-}
-
-/* For nodes BELOW the belt (even ones) - line goes UP to belt */
-.project-node:nth-child(even)::before {
-  bottom: 100%; /* start from top of node */
-  height: calc(1.8rem); /* length to reach belt from bottom-offset nodes */
-}
-
-
+  footer { text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem; }
 
 </style>
 </head>
@@ -483,178 +444,106 @@
 <main id="projects-main" aria-label="Project list">
 
   <div class="page-toggle">
-  <a href="projects.html" class="toggle-btn active">Hardware & Software</a>
-  <a href="pcbs.html" class="toggle-btn">PCB Gallery</a>
-</div>
-
+    <a href="projects.html" class="toggle-btn active">Hardware & Software</a>
+    <a href="pcbs.html" class="toggle-btn">PCB Gallery</a>
+  </div>
 
   <div class="belt-line" aria-hidden="true"></div>
-  <div class="belt-container" aria-live="polite">
-    <div class="belt-scroll" aria-label="Scrolling project nodes">
-      <!-- Project nodes duplicated twice for seamless infinite scroll -->
 
-      <div class="project-node" tabindex="0"
+  <div class="deck-wrap" aria-live="polite">
+    <div class="deck" id="deck" role="list" aria-label="Projects deck">
+      <!-- Single set of project nodes - data attributes remain for modal -->
+      <div class="card" role="listitem" tabindex="0"
         data-title="INSITE Bioprinter Project"
         data-img="assets\INSITE.png"
         data-desc="Awarded the highly competitive First Year Summer Research Fellowship (1 of 15 selected from over 1,000 first-year engineering students), supervised by Professor Axel Guenther. Redesigning the INSITE handheld bioprinter to improve reliability and clinical usability. Enhancing motion control systems and firmware for greater printing precision and real-time responsiveness. Prototyping intuitive control interfaces and iterating designs with PhD mentors to enhance surgical experience.">
         <h3>INSITE Bioprinter</h3>
         <p>Summer Research Fellowship</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="ZenVision"
         data-img="assets\ZenVision Glasses.png"
         data-desc="ZenVision is a wearable smart glasses system designed to support children with ADHD who struggle with impulsive verbal outbursts in the classroom. Built for a 9-year-old child, Megan, introduced to us by our clients, the system discreetly detects when she speaks out loudly—often a response to anxiety—and gently delivers visual reminders on the lens to help with self-regulation, without singling her out. The system uses an ESP32 microcontroller and MAX4466 microphone to monitor sound in real-time. A custom CNN (built with TensorFlow and trained on MFCCs) confirms whether the voice is Megan’s before triggering the prompt—achieving an average response time of just 1.93 seconds. A companion web dashboard (HTML/CSS/JS + Plotly.js) logs these events to a real-time database, enabling teachers and parents to track behavioral patterns and progress over time. Selected as a Top 20 Project (out of 187 teams) in the UofT ESP (APS 112) Showcase."
         data-github="https://github.com/SemontiiMandal/ZenVision">
         <h3>ZenVision</h3>
         <p>ADHD Support Glasses</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="Auracle"
         data-img="assets\Auracle Glasses and Gloves.jpg"
         data-desc="Auracle is a wearable system that combines glasses and gloves for voice- and gesture-based music generation and control. The glasses are equipped with a voice recording module that captures user commands, which are then converted to text using Hugging Face’s speech-to-text model. This text prompt is passed to Hugging Face’s AudioLDM 2, a generative AI model, to create a unique music track tailored to the user’s request. Sentiment analysis is performed on the text prompt using TextBlob to determine the emotional tone, and this data is logged into Firebase’s Realtime Database and visualized on a Streamlit dashboard to track the user’s mood history. The gloves, equipped with accelerometer and gyroscope sensors, allow the user to control music functions such as skipping tracks, adjusting volume, and stopping the music through simple hand gestures. A full-stack application built with Streamlit manages user profiles, music generation history, and mood tracking."
         data-github="https://github.com/SemontiiMandal/Auracle">
         <h3>Auracle</h3>
         <p>Voice and Gesture-Controlled Music Generation System</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="Wildfire Response"
         data-img="assets\UTEK.jpg"
         data-desc="Developed an automated response system in Python to rescue citizens in distress during wildfires and manage communication between users and dispatch centers. Integrated Twilio and Google Sheets APIs (gspread) to collect user details—such as injury severity, age, and location—via SMS and store them in a centralized data repository. Designed a priority-based dispatch algorithm that deploys rescuers by assessing priority according to Canada’s Ministry of Health’s Triage and Acuity Scale (CTAS) guidelines, ensuring efficient and accurate resource allocation."
         data-github="https://github.com/SemontiiMandal/Automated-Emergency-Response-System-for-Wildfires">
         <h3>Wildfire Response</h3>
         <p>Automated Emergency Response System</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="Wearable Breathing Biofeedback Device"
         data-img="assets\ut_biome_logo.jpg"
         data-desc="We are collaborating with Prof. Christopher Bouwmeester (UofT IBME & ISTEP) to design a wearable biofeedback device that monitors real-time breathing patterns. The device aims to assist users in learning deep breathing techniques, such as diaphragmatic breathing. Using Machine Learning algorithms, it will analyze breathing patterns to detect potential diseases. The device incorporates an Arduino Nano, stretch sensors, FFT analysis, and buzzer feedback for real-time guidance and monitoring.">
         <h3>Breathing Biofeedback</h3>
         <p>UTBIOME (UofT Biomedical Engineering) Design Team</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="Kidney Stone Detection"
         data-img="assets\ks.png"
         data-desc="The Kidney Stone Detection System is a machine learning-based solution designed to predict kidney stones by analyzing the physical characteristics of urine. Using supervised learning classifiers, such as Logistic Regression, Decision Tree, and Support Vector Machine (SVM), the system detects potential abnormalities, offering a non-invasive and cost-effective alternative to imaging techniques like CT scans. Trained on a dataset of urine characteristics, the system achieved over 80% accuracy and an F1 score above 85%."
         data-github="https://github.com/SemontiiMandal/Research-Paper-Kidney-Stones-JEI">
         <h3>Kidney Stone Detection</h3>
         <p>Published ML Research</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="Plant Disease Detector"
         data-img="assets\leaves.jpeg"
         data-desc="The Plant Disease Detection project uses deep learning to identify plant diseases from images. It leverages the ResNet50 model, a pre-trained Convolutional Neural Network (CNN), fine-tuned to classify images into 38 categories of plant diseases. The model is trained on an augmented dataset, incorporating techniques like zoom, shift, and flipping to prevent overfitting. With Python, TensorFlow, and Keras, the project achieves over 96.5% classification accuracy."
         data-github="https://github.com/SemontiiMandal/Plant-Disease-Detection">
         <h3>Plant Disease Detecting Algorithm</h3>
         <p>Deep Learning / CNN</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="Malicious URL Detector"
         data-img="assets\cs.jpg"
         data-desc="The Malicious URL Detector is a machine learning project designed to classify URLs as either malicious or benign, enhancing cybersecurity. Using natural language processing (NLP) techniques, the model tokenizes URLs into features and applies algorithms like Logistic Regression and Support Vector Machines (SVM) for classification. The project utilizes Python and libraries such as Pandas, NumPy, and Scikit-learn for data manipulation, feature extraction, and model evaluation. By analyzing URL patterns, it aims to identify harmful links and strengthen online security."
         data-github="https://github.com/SemontiiMandal/Malicious-URL-Detector">
         <h3>Malicious URL Detector</h3>
-        <p>New York Academy of Sciences (NYAS) Junior Academy Global Finalist, Spring 2023 (Cybersecurity)</p>
+        <p>NYAS Junior Academy Finalist</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <div class="project-node" tabindex="0"
+      <div class="card" role="listitem" tabindex="0"
         data-title="MNIST Digits"
         data-img="assets\MNIST_dataset_example.png"
         data-desc="The MNIST Handwritten Digits Recognition project uses deep learning to classify handwritten digits from the MNIST dataset. The model employs a neural network with dense layers and ReLU activation, trained using TensorFlow. It is designed to accurately recognize digits and can be extended for custom images. The network achieves 98.6% accuracy on the MNIST test set, with a three-layer architecture that includes flattening the input image, two hidden dense layers, and a final output layer with softmax activation."
         data-github="https://github.com/SemontiiMandal/MNIST-Classification">
         <h3>MNIST Digits</h3>
         <p>ML Classification</p>
+        <div class="meta">Click to Open. Swipe to view next.</div>
       </div>
 
-      <!-- Duplicate for infinite scroll -->
-
-            <div class="project-node" tabindex="0"
-        data-title="INSITE Bioprinter Project"
-        data-img="assets\INSITE.png"
-        data-desc="Awarded the highly competitive First Year Summer Research Fellowship (1 of 15 selected from over 1,000 first-year engineering students), supervised by Professor Axel Guenther. Redesigning the INSITE handheld bioprinter to improve reliability and clinical usability. Enhancing motion control systems and firmware for greater printing precision and real-time responsiveness. Prototyping intuitive control interfaces and iterating designs with PhD mentors to enhance surgical experience.">
-        <h3>INSITE Bioprinter</h3>
-        <p>Summer Research Fellowship</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="ZenVision"
-        data-img="assets\ZenVision Glasses.png"
-        data-desc="ZenVision is a wearable smart glasses system designed to support children with ADHD who struggle with impulsive verbal outbursts in the classroom. Built for a 9-year-old child, Megan, introduced to us by our clients, the system discreetly detects when she speaks out loudly—often a response to anxiety—and gently delivers visual reminders on the lens to help with self-regulation, without singling her out. The system uses an ESP32 microcontroller and MAX4466 microphone to monitor sound in real-time. A custom CNN (built with TensorFlow and trained on MFCCs) confirms whether the voice is Megan’s before triggering the prompt—achieving an average response time of just 1.93 seconds. A companion web dashboard (HTML/CSS/JS + Plotly.js) logs these events to a real-time database, enabling teachers and parents to track behavioral patterns and progress over time. Selected as a Top 20 Project (out of 187 teams) in the UofT ESP (APS 112) Showcase."
-        data-github="https://github.com/SemontiiMandal/ZenVision">
-        <h3>ZenVision</h3>
-        <p>ADHD Support Glasses</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="Auracle"
-        data-img="assets\Auracle Glasses and Gloves.jpg"
-        data-desc="Auracle is a wearable system that combines glasses and gloves for voice- and gesture-based music generation and control. The glasses are equipped with a voice recording module that captures user commands, which are then converted to text using Hugging Face’s speech-to-text model. This text prompt is passed to Hugging Face’s AudioLDM 2, a generative AI model, to create a unique music track tailored to the user’s request. Sentiment analysis is performed on the text prompt using TextBlob to determine the emotional tone, and this data is logged into Firebase’s Realtime Database and visualized on a Streamlit dashboard to track the user’s mood history. The gloves, equipped with accelerometer and gyroscope sensors, allow the user to control music functions such as skipping tracks, adjusting volume, and stopping the music through simple hand gestures. A full-stack application built with Streamlit manages user profiles, music generation history, and mood tracking."
-        data-github="https://github.com/SemontiiMandal/Auracle">
-        <h3>Auracle</h3>
-        <p>Voice and Gesture-Controlled Music Generation System</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="Wildfire Response"
-        data-img="assets\UTEK.jpg"
-        data-desc="Developed an automated response system in Python to rescue citizens in distress during wildfires and manage communication between users and dispatch centers. Integrated Twilio and Google Sheets APIs (gspread) to collect user details—such as injury severity, age, and location—via SMS and store them in a centralized data repository. Designed a priority-based dispatch algorithm that deploys rescuers by assessing priority according to Canada’s Ministry of Health’s Triage and Acuity Scale (CTAS) guidelines, ensuring efficient and accurate resource allocation."
-        data-github="https://github.com/SemontiiMandal/Automated-Emergency-Response-System-for-Wildfires">
-        <h3>Wildfire Response</h3>
-        <p>Automated Emergency Response System</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="Wearable Breathing Biofeedback Device"
-        data-img="assets\ut_biome_logo.jpg"
-        data-desc="We are collaborating with Prof. Christopher Bouwmeester (UofT IBME & ISTEP) to design a wearable biofeedback device that monitors real-time breathing patterns. The device aims to assist users in learning deep breathing techniques, such as diaphragmatic breathing. Using Machine Learning algorithms, it will analyze breathing patterns to detect potential diseases. The device incorporates an Arduino Nano, stretch sensors, FFT analysis, and buzzer feedback for real-time guidance and monitoring.">
-        <h3>Breathing Biofeedback</h3>
-        <p>UTBIOME (UofT Biomedical Engineering) Design Team</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="Kidney Stone Detection"
-        data-img="assets\ks.png"
-        data-desc="The Kidney Stone Detection System is a machine learning-based solution designed to predict kidney stones by analyzing the physical characteristics of urine. Using supervised learning classifiers, such as Logistic Regression, Decision Tree, and Support Vector Machine (SVM), the system detects potential abnormalities, offering a non-invasive and cost-effective alternative to imaging techniques like CT scans. Trained on a dataset of urine characteristics, the system achieved over 80% accuracy and an F1 score above 85%."
-        data-github="https://github.com/SemontiiMandal/Research-Paper-Kidney-Stones-JEI">
-        <h3>Kidney Stone Detection</h3>
-        <p>Published ML Research</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="Plant Disease Detector"
-        data-img="assets\leaves.jpeg"
-        data-desc="The Plant Disease Detection project uses deep learning to identify plant diseases from images. It leverages the ResNet50 model, a pre-trained Convolutional Neural Network (CNN), fine-tuned to classify images into 38 categories of plant diseases. The model is trained on an augmented dataset, incorporating techniques like zoom, shift, and flipping to prevent overfitting. With Python, TensorFlow, and Keras, the project achieves over 96.5% classification accuracy."
-        data-github="https://github.com/SemontiiMandal/Plant-Disease-Detection">
-        <h3>Plant Disease Detecting Algorithm</h3>
-        <p>Deep Learning / CNN</p>
-      </div>
-
-
-      <div class="project-node" tabindex="0"
-        data-title="Malicious URL Detector"
-        data-img="assets\cs.jpg"
-        data-desc="The Malicious URL Detector is a machine learning project designed to classify URLs as either malicious or benign, enhancing cybersecurity. Using natural language processing (NLP) techniques, the model tokenizes URLs into features and applies algorithms like Logistic Regression and Support Vector Machines (SVM) for classification. The project utilizes Python and libraries such as Pandas, NumPy, and Scikit-learn for data manipulation, feature extraction, and model evaluation. By analyzing URL patterns, it aims to identify harmful links and strengthen online security."
-        data-github="https://github.com/SemontiiMandal/Malicious-URL-Detector">
-        <h3>Malicious URL Detector</h3>
-        <p>New York Academy of Sciences (NYAS) Junior Academy Global Finalist, Spring 2023 (Cybersecurity)</p>
-      </div>
-
-      <div class="project-node" tabindex="0"
-        data-title="MNIST Digits"
-        data-img="assets\MNIST_dataset_example.png"
-        data-desc="The MNIST Handwritten Digits Recognition project uses deep learning to classify handwritten digits from the MNIST dataset. The model employs a neural network with dense layers and ReLU activation, trained using TensorFlow. It is designed to accurately recognize digits and can be extended for custom images. The network achieves 98.6% accuracy on the MNIST test set, with a three-layer architecture that includes flattening the input image, two hidden dense layers, and a final output layer with softmax activation."
-        data-github="https://github.com/SemontiiMandal/MNIST-Classification">
-        <h3>MNIST Digits</h3>
-        <p>ML Classification</p>
-      </div>
     </div>
+
+    <!--<div class="deck-hint" aria-hidden="true">Click to Open. Swipe to move it to the bottom.</div>-->
   </div>
 </main>
 
@@ -676,9 +565,7 @@
   </div>
 </div>
 
-<footer style="text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem;">
-  &copy; Sam — ECE @ UofT
-</footer>
+<footer>&copy; Sam — ECE @ UofT</footer>
 
 <script>
   // Hamburger toggle (same behavior as other pages)
@@ -699,7 +586,7 @@
     sidebar.classList.remove('show'); sidebar.setAttribute('hidden',''); hamburger.setAttribute('aria-expanded', false);
   }));
 
-  // Modal functionality
+  // Modal functionality (unchanged logic)
   const modal = document.getElementById('project-modal');
   const modalTitle = modal.querySelector('#modal-title');
   const modalDesc = modal.querySelector('#modal-desc');
@@ -707,18 +594,7 @@
   const modalGitHub = modal.querySelector('#modal-github');
   const closeBtn = modal.querySelector('.close-modal');
 
-  // Open modal on project node click or Enter key
-  document.querySelectorAll('.project-node').forEach(node => {
-    node.addEventListener('click', () => openModal(node));
-    node.addEventListener('keydown', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal(node);
-      }
-    });
-  });
-
-  function openModal(node) {
+  function openModalFromCard(node) {
     const title = node.getAttribute('data-title');
     const desc = node.getAttribute('data-desc');
     const img = node.getAttribute('data-img');
@@ -742,102 +618,208 @@
     closeBtn.focus();
   }
 
-  // Close modal
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', e => {
     if (e.target === modal) closeModal();
   });
-
-  // Close modal on Escape key
   window.addEventListener('keydown', e => {
     if(e.key === 'Escape' && !modal.hidden) {
       closeModal();
     }
   });
-
   function closeModal() {
     modal.classList.remove('show');
     modal.hidden = true;
     document.body.classList.remove('modal-open');
   }
 
-(() => {
-  const beltScroll = document.querySelector('.belt-scroll');
-  const speed = 0.5; // pixels per frame (adjust for scroll speed)
-  let position = 0; // current translateX
-  let isDragging = false;
-  let dragStartX = 0;
-  let dragCurrentX = 0;
-  let lastTimestamp = null;
+  // Deck logic: stack cards visually and support swipe-to-bottom
+(function(){
+  const deck = document.getElementById('deck');
+  let cards = Array.from(deck.querySelectorAll('.card'));
+  let isPointerDown = false;
+  let startX = 0, startY = 0;
+  let currentCard = null;
+  let dragId = null;
+  let dragged = false;
+  const SWIPE_THRESHOLD = 80; // pixels to trigger swipe
+  const STACK_OFFSET_Y = 16; // px vertical offset per card
+  const STACK_SCALE_STEP = 0.02; // scale reduction per depth
+  const MAX_DEPTH_SHOW = 6; // how many cards to style (the rest hidden under)
 
-  // Total scrollable width before looping back (half of content because duplicated)
-  const totalScrollWidth = beltScroll.scrollWidth / 2;
+  function renderStack(animated = true) {
+    cards = Array.from(deck.querySelectorAll('.card'));
+    cards.forEach((card, idx) => {
+      const depth = idx;
+      const capped = Math.min(depth, MAX_DEPTH_SHOW);
+      const translateY = capped * STACK_OFFSET_Y;
+      const scale = 1 - capped * STACK_SCALE_STEP;
+      const rotate = (depth % 2 === 0) ? (capped * 0.4) : (-capped * 0.4);
+      const zIndex = (cards.length - idx) + 100;
+      card.style.zIndex = zIndex;
+      card.style.setProperty('--offsetY', `${translateY}px`);
+      card.classList.toggle('top', idx === 0);
 
-  function step(timestamp) {
-    if (!lastTimestamp) lastTimestamp = timestamp;
-    const delta = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
-
-    if (!isDragging) {
-      // Move left by speed * time delta (convert ms to seconds)
-      position -= speed * (delta / 16); // assuming 60fps baseline ~16ms/frame
-      if (position <= -totalScrollWidth) {
-        // loop back
-        position += totalScrollWidth;
+      if(animated) {
+        card.style.transition = 'transform 280ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease, opacity 220ms ease';
+      } else {
+        card.style.transition = 'none';
       }
-      beltScroll.style.transform = `translateX(${position}px)`;
-    } else {
-      // When dragging, translateX is controlled by drag offset
-      const dragOffset = dragCurrentX - dragStartX;
-      let newPos = position + dragOffset;
 
-      // Clamp within 0 to -totalScrollWidth range with looping
-      if (newPos > 0) newPos -= totalScrollWidth;
-      else if (newPos <= -totalScrollWidth) newPos += totalScrollWidth;
+      card.style.transform = `translate(-50%, -50%) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
+      card.style.opacity = (depth > 8) ? 0 : 1;
+      card.style.pointerEvents = (idx === 0) ? 'auto' : 'none';
+      // clear any lingering drag shadow on non-top cards
+      if (idx !== 0) card.style.boxShadow = '';
+    });
+  }
 
-      beltScroll.style.transform = `translateX(${newPos}px)`;
+  // Move top card to bottom of DOM order (robust)
+function moveTopToBottom(direction = 'left') {
+  if (cards.length === 0) return;
+  const top = cards[0];
+
+  // clear inline transforms from dragging
+  top.style.transform = '';
+  top.style.transition = '';
+  void top.offsetWidth; // force reflow
+
+  // animate out
+  if (direction === 'left') top.classList.add('fly-left');
+  else if (direction === 'right') top.classList.add('fly-right');
+  else top.classList.add('fly-up');
+
+  deck.style.pointerEvents = 'none';
+
+  const finish = () => {
+    top.removeEventListener('transitionend', finish);
+    top.classList.remove('fly-left','fly-right','fly-up');
+    top.style.transition = 'none';
+    top.style.boxShadow = '';
+
+    // temporarily hide the card while moving it
+    top.style.visibility = 'hidden';
+
+    // append to bottom
+    deck.appendChild(top);
+
+    // re-render, then fade it back in
+    setTimeout(() => {
+      renderStack(true);
+      top.style.visibility = 'visible';
+      deck.style.pointerEvents = 'auto';
+    }, 25);
+  };
+
+  top.addEventListener('transitionend', finish);
+  setTimeout(finish, 700); // fallback safety
+}
+
+
+  function bindCardEvents(card) {
+    // avoid attaching multiple duplicates
+    if (card.dataset.bound) return;
+    card.dataset.bound = 'true';
+
+    card.addEventListener('click', (e) => {
+      if (dragged) { dragged = false; return; }
+      openModalFromCard(card);
+    });
+    card.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModalFromCard(card);
+      }
+    });
+
+    card.addEventListener('pointerdown', (e) => {
+      // only top card draggable
+      if (!card.classList.contains('top')) return;
+      isPointerDown = true;
+      dragged = false;
+      currentCard = card;
+      startX = e.clientX;
+      startY = e.clientY;
+      dragId = e.pointerId;
+      try { card.setPointerCapture(dragId); } catch(_) {}
+      // remove transition so we move it exactly with pointer
+      card.style.transition = 'none';
+    });
+
+    card.addEventListener('pointermove', (e) => {
+      if (!isPointerDown || e.pointerId !== dragId || !currentCard) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const rotate = Math.max(-35, Math.min(35, dx * 0.12));
+      currentCard.style.transform = `translate(-50%, -50%) translate(${dx}px, ${dy}px) rotateZ(${rotate}deg)`;
+      currentCard.style.boxShadow = '0 30px 80px rgba(0,0,0,0.75), 0 0 40px rgba(15,111,255,0.18)';
+      dragged = Math.abs(dx) > 6 || Math.abs(dy) > 6;
+    });
+
+    card.addEventListener('pointerup', (e) => {
+      if (!currentCard || e.pointerId !== dragId) return;
+      isPointerDown = false;
+      try { currentCard.releasePointerCapture(dragId); } catch(_) {}
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      if (Math.abs(dx) > SWIPE_THRESHOLD || Math.abs(dy) > SWIPE_THRESHOLD) {
+        const dir = (Math.abs(dx) > Math.abs(dy)) ? (dx > 0 ? 'right' : 'left') : 'up';
+        // clear the drag state on this card (so it's ready for CSS animation)
+        // do NOT leave transition:none inlined — moveTopToBottom will clear it.
+        moveTopToBottom(dir);
+      } else {
+        // return to stack
+        currentCard.style.transition = 'transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease';
+        // clear box shadow and let renderStack snap it back
+        currentCard.style.boxShadow = '';
+        renderStack(true);
+      }
+
+      // reset pointer state
+      setTimeout(()=> { dragged = false; }, 50);
+      currentCard = null;
+      dragId = null;
+    });
+
+    card.addEventListener('pointercancel', (e) => {
+      if (!currentCard || e.pointerId !== dragId) return;
+      isPointerDown = false;
+      try { currentCard.releasePointerCapture(dragId); } catch(_) {}
+      currentCard.style.boxShadow = '';
+      renderStack(true);
+      currentCard = null;
+      dragId = null;
+    });
+
+    card.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
+  function initDeck() {
+    cards = Array.from(deck.querySelectorAll('.card'));
+    cards.forEach((c) => bindCardEvents(c));
+    renderStack(false);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('modal-open')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === ' ') {
+      e.preventDefault();
+      moveTopToBottom(e.key === 'ArrowRight' ? 'right' : 'left');
     }
-    requestAnimationFrame(step);
-  }
+  });
 
-  // Touch and mouse drag handlers
-  function onDragStart(e) {
-    isDragging = true;
-    dragStartX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    dragCurrentX = dragStartX;
-    beltScroll.style.cursor = 'grabbing';
-  }
-
-  function onDragMove(e) {
-    if (!isDragging) return;
-    dragCurrentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-  }
-
-  function onDragEnd(e) {
-    if (!isDragging) return;
-    isDragging = false;
-    // Update position by the drag distance
-    const dragDistance = dragCurrentX - dragStartX;
-    position += dragDistance;
-    // Normalize position within looping range
-    if (position > 0) position -= totalScrollWidth;
-    else if (position <= -totalScrollWidth) position += totalScrollWidth;
-
-    beltScroll.style.cursor = 'grab';
-  }
-
-  beltScroll.addEventListener('mousedown', onDragStart);
-  beltScroll.addEventListener('touchstart', onDragStart, {passive:true});
-  window.addEventListener('mousemove', onDragMove);
-  window.addEventListener('touchmove', onDragMove, {passive:true});
-  window.addEventListener('mouseup', onDragEnd);
-  window.addEventListener('touchend', onDragEnd);
-
-  requestAnimationFrame(step);
+  initDeck();
+  window.addEventListener('resize', () => renderStack(false));
 })();
+
+
+  // Accessibility: focus styles and trap no additional modifications required
 
 </script>
 
 </body>
 </html>
+
+
 
