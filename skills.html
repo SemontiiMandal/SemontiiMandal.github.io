@@ -1,15 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-17P7VBGTPH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-17P7VBGTPH');
-</script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sam — Skills</title>
@@ -19,7 +11,7 @@
     --bg-2: #06122a;
     --neon-1: #00e5ff;
     --neon-2: #0f6fff;
-    --muted: #9aa7b6;
+    --muted: #ffffffcc;
 
     /* Category colors */
     --prog-color: #0ff;
@@ -151,7 +143,7 @@
     cursor: default;
     transition: all 0.3s ease;
     position: relative;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.05);
   }
   .chip:hover {
     color: #04122a;
@@ -242,16 +234,16 @@
     <div class="chips">
       <div class="chip">Python<div class="tooltip">Data science, ML, scripting</div></div>
       <div class="chip">C<div class="tooltip">Low-level firmware</div></div>
-      <div class="chip">C++<div class="tooltip">Embedded and OOP</div></div>
+      <div class="chip">C++<div class="tooltip">Embedded & OOP</div></div>
       <div class="chip">Java<div class="tooltip">Android apps</div></div>
+      <div class="chip">Objective-C<div class="tooltip">iOS apps</div></div>
       <div class="chip">MATLAB<div class="tooltip">Signal processing</div></div>
-      <div class="chip">HTML<div class="tooltip">Web UI</div></div>
-      <div class="chip">CSS<div class="tooltip">Styling</div></div>
-      <div class="chip">JavaScript<div class="tooltip">Frontend interactivity</div></div>
+      <div class="chip">HTML/CSS/JS<div class="tooltip">Web UI</div></div>
       <div class="chip">React<div class="tooltip">Component-based UI</div></div>
       <div class="chip">TypeScript<div class="tooltip">Typed JS</div></div>
       <div class="chip">SQL<div class="tooltip">Database queries</div></div>
       <div class="chip">Haskell<div class="tooltip">Functional programming</div></div>
+      <div class="chip">Rust<div class="tooltip">System programming</div></div>
     </div>
   </div>
 
@@ -262,7 +254,8 @@
       <div class="chip">ARM Cortex-M<div class="tooltip">Portenta H7, STM32 Series</div></div>
       <div class="chip">ESP32<div class="tooltip">IoT & Edge ML</div></div>
       <div class="chip">Raspberry Pi<div class="tooltip">Prototyping</div></div>
-      <div class="chip">Real-time firmware<div class="tooltip">C/C++, mbed</div></div>
+      <div class="chip">ROS2<div class="tooltip">Robotics middleware</div></div>
+      <div class="chip">ISR / Interrupts<div class="tooltip">Real-time design</div></div>
       <div class="chip">CAN<div class="tooltip">Controller Area Network</div></div>
       <div class="chip">I2C<div class="tooltip">Peripheral comms</div></div>
       <div class="chip">UART<div class="tooltip">Serial comms</div></div>
@@ -273,6 +266,8 @@
       <div class="chip">DAC<div class="tooltip">Digital to analog</div></div>
       <div class="chip">JTAG debugging<div class="tooltip">Low-level debugging</div></div>
       <div class="chip">Bootloader restore<div class="tooltip">STM32CubeProgrammer</div></div>
+      <div class="chip">Sensor interfacing<div class="tooltip">Cameras, stretch, microfluidics</div></div>
+      <div class="chip">Bluetooth / Wireless<div class="tooltip">IoT & wearable comms</div></div>
     </div>
   </div>
 
@@ -287,13 +282,14 @@
       <div class="chip">OpenCV<div class="tooltip">Computer vision</div></div>
       <div class="chip">MFCC<div class="tooltip">Audio features</div></div>
       <div class="chip">FFT<div class="tooltip">Frequency analysis</div></div>
+      <div class="chip">Speech Processing<div class="tooltip">Voice/audio ML</div></div>
       <div class="chip">Hugging Face<div class="tooltip">Transformer models</div></div>
       <div class="chip">LDMs<div class="tooltip">Latent Diffusion Models</div></div>
-      <div class="chip">Transformer Gen<div class="tooltip">Text/audio/image gen</div></div>
+      <div class="chip">Transformer Gen<div class="tooltip">Text/audio/image generation</div></div>
       <div class="chip">AI Agents<div class="tooltip">Autonomous systems</div></div>
       <div class="chip">Langflow<div class="tooltip">Flow-based AI design</div></div>
       <div class="chip">MCP<div class="tooltip">Model Context Protocol</div></div>
-      <div class="chip">Edge ML<div class="tooltip">On-device deployment</div></div>
+      <div class="chip">Edge ML / TinyML<div class="tooltip">On-device deployment</div></div>
     </div>
   </div>
 
@@ -309,6 +305,8 @@
       <div class="chip">Streamlit<div class="tooltip">Data apps</div></div>
       <div class="chip">Gradio<div class="tooltip">ML model UIs</div></div>
       <div class="chip">Plotly.js<div class="tooltip">Interactive charts</div></div>
+      <div class="chip">Oscilloscope / Logic Analyzer<div class="tooltip">Signal debugging</div></div>
+      <div class="chip">Multimeter<div class="tooltip">Electrical measurement</div></div>
     </div>
   </div>
 
@@ -318,10 +316,13 @@
     <div class="chips">
       <div class="chip">Fusion 360<div class="tooltip">3D CAD modeling</div></div>
       <div class="chip">AutoCAD<div class="tooltip">2D drafting</div></div>
-      <div class="chip">FEA<div class="tooltip">Stress/thermal analysis</div></div>
+      <div class="chip">FEA / Ansys<div class="tooltip">Stress/thermal analysis</div></div>
       <div class="chip">UI/UX Prototyping<div class="tooltip">Assistive tech design</div></div>
       <div class="chip">Human-centered design<div class="tooltip">User-first approach</div></div>
-      <div class="chip">PCB Design<div class="tooltip">Altium, KiCAD</div></div>
+      <div class="chip">Altium Designer/KiCAD<div class="tooltip">PCB Designing</div></div>
+      <div class="chip">LTSpice<div class="tooltip">Circuit simulation</div></div>
+      <div class="chip">Verilog/HDLs<div class="tooltip">Digital design & simulation</div></div>
+      <div class="chip">FPGA (Altera De1-SoC)<div class="tooltip">Hardware</div></div>
     </div>
   </div>
 
@@ -341,11 +342,8 @@
   }
   hamburger.addEventListener('click', toggleMenu);
   hamburger.addEventListener('keydown', (e) => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleMenu();} });
-  sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{sidebar.classList.remove('show'); sidebar.setAttribute('hidden',''); hamburger.setAttribute('aria-expanded', false);}));
+  sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{sidebar.classList.remove('show'); sidebar.setAttribute('hidden',''); hamburger.setAttribute('aria-expanded', false);} ));
 </script>
 
 </body>
 </html>
-
-
-
