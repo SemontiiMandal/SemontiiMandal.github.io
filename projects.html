@@ -802,9 +802,27 @@ function closeModal() {
     if (e.target === modal) closeModal();
   });
 </script>
-
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const sidebar = document.getElementById('mobile-menu');
+  function toggleMenu(){
+    const isOpen = sidebar.classList.toggle('show');
+    if(isOpen) sidebar.removeAttribute('hidden'); else sidebar.setAttribute('hidden','');
+    hamburger.setAttribute('aria-expanded', isOpen);
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('keydown', (e) => {
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleMenu();}
+  });
+  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    sidebar.classList.remove('show');
+    sidebar.setAttribute('hidden','');
+    hamburger.setAttribute('aria-expanded', false);
+  }));
+</script>
 </body>
 </html>
+
 
 
 
