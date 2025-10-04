@@ -1,18 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-17P7VBGTPH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-17P7VBGTPH');
-</script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sam — Projects</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg-1:#020617;
@@ -21,16 +14,18 @@
     --neon-2:#0f6fff;
     --muted:#9aa7b6;
   }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
   html, body {
-    margin: 0; padding: 0; height: 100%;
+    height: 100%;
     font-family: Inter, sans-serif;
     background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
     color: white;
     overflow-x: hidden;
   }
-  body.modal-open {
-    overflow: hidden;
-  }
+
+  body.modal-open { overflow: hidden; }
 
   /* NAVBAR */
   nav.tabs {
@@ -84,20 +79,16 @@
 
   .sidebar {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100vh;
+    top: 0; right: 0;
+    width: 250px; height: 100vh;
     background: var(--bg-2);
-    padding: 3rem 1rem 1rem 1rem;
+    padding: 3rem 1rem 1rem;
     display: none;
     flex-direction: column;
     gap: 1rem;
     z-index: 105;
   }
-  .sidebar.show {
-    display: flex;
-  }
+  .sidebar.show { display: flex; }
   .sidebar a {
     color: var(--neon-1);
     text-decoration: none;
@@ -124,16 +115,12 @@
     min-height: 100vh;
     padding: 6rem 1rem 4rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    overflow: hidden;
   }
 
   .page-toggle {
-    position: absolute;
-    top: 4.5rem; /* just below navbar */
-    left: 50%;
-    transform: translateX(-50%);
+    margin-bottom: 2.5rem;
     display: flex;
     border: 2px solid var(--neon-1);
     border-radius: 8px;
@@ -159,258 +146,322 @@
     color: var(--bg-2);
   }
 
-  /* Deck container */
-  .deck-wrap {
-    width: min(1200px, 95%);
-    max-width: 1100px;
-    height: 560px;
-    position: relative;
-    perspective: 1500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(90deg, var(--neon-1), var(--neon-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
   }
 
-  /* Center dotted line behind deck (subtle) */
-  .belt-line {
-    position: absolute;
-    top: 50%;
-    left: 0;
+  /* ===== PROJECT GRID ===== */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: min(1100px, 90%);
+  }
+
+  .project-card {
+    position: relative;
+    background: var(--bg-2);
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.05);
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 35px rgba(0, 229, 255, 0.15);
+  }
+
+  .project-image {
+    position: relative;
+    height: 200px;
+    background: radial-gradient(circle at top left, var(--neon-1), transparent 70%);
+    overflow: hidden;
+  }
+  .project-image img {
     width: 100%;
-    height: 4px;
-    background-image: radial-gradient(var(--neon-1) 3px, transparent 3px);
-    background-size: 16px 4px;
-    transform: translateY(-50%);
-    z-index: 0;
-    opacity: 0.06;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+    transition: transform 0.5s ease;
   }
+  .project-card:hover .project-image img { transform: scale(1.05); }
 
-  /* Card styles */
-  .deck {
-    width: 540px;
-    height: 380px;
-    position: relative;
-    transform-style: preserve-3d;
-    touch-action: pan-y;
-  }
-
-  .card {
-    --offsetY: 0px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 440px;
-    max-width: 88%;
-    height: 300px;
-    transform: translate(-50%, -50%) translateY(var(--offsetY)) scale(1) rotateZ(0deg);
-    background: linear-gradient(180deg, rgba(6,18,42,0.95), rgba(2,6,23,0.95));
-    border-radius: 14px;
-    border: 1px solid rgba(0,229,255,0.12);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 18px rgba(15,111,255,0.06);
+  .project-content {
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.2rem;
-    text-align: center;
-    color: white;
-    font-weight: 700;
-    user-select: none;
-    cursor: grab;
-    transition: transform 300ms cubic-bezier(.2,.9,.3,1), box-shadow 200ms ease, opacity 200ms ease;
-    will-change: transform, opacity;
-    z-index: 1;
-    background: linear-gradient(135deg, #0a1f44, #021026); /* deep blue gradient */
-  border-radius: 16px;
-  border: 2px solid rgba(115, 164, 206, 0.642); /* brighter, semi-transparent cyan edge */
-  box-shadow:
-    0 20px 60px rgba(32, 124, 181, 0.514),
-    0 0 30px rgba(61, 113, 192, 0.2); /* slightly stronger glow for edges */
+    gap: 0.5rem;
   }
 
-  .card:active { cursor: grabbing; }
-
-  .card h3 {
-    margin: 0 0 0.4rem;
-    font-size: 1.25rem;
-    line-height: 1.1;
+  .project-content h3 {
+    font-size: 1.2rem;
+    background: linear-gradient(90deg, var(--neon-1), var(--neon-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .card p {
-    margin: 0;
+
+  .project-content p {
+    color: var(--muted);
     font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
     color: var(--neon-1);
-    opacity: 0.9;
-    line-height: 1.1;
-    font-weight: 600;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    background: rgba(0, 229, 255, 0.05);
   }
 
-  /* small project meta at bottom */
-  .card .meta {
-    position: absolute;
-    bottom: 14px;
-    left: 18px;
-    right: 18px;
-    text-align: left;
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  /* top card elevation */
-  .card.top {
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(8, 106, 253, 0.12);
-    cursor: grab;
-    box-shadow:
-    0 25px 70px rgba(0,0,0,0.75),
-    0 0 35px rgba(15,111,255,0.35),
-    0 0 8px rgba(0,229,255,0.5) inset; /* soft cyan inset glow around edges */
-  }
-.card:not(.top) {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.45), 0 0 12px rgba(0,111,255,0.05);
-}
-
-
-  /* offscreen animation helpers */
-  .fly-left { transition: transform 450ms cubic-bezier(.08,.7,.35,1), opacity 350ms ease; transform: translate(-150vw, -20vh) rotateZ(-25deg) scale(0.95); opacity: 0; }
-  .fly-right { transition: transform 450ms cubic-bezier(.08,.7,.35,1), opacity 350ms ease; transform: translate(150vw, -10vh) rotateZ(25deg) scale(0.95); opacity: 0; }
-  .fly-up { transition: transform 450ms cubic-bezier(.08,.7,.35,1), opacity 350ms ease; transform: translate(-5vw, -150vh) rotateZ(-6deg) scale(0.95); opacity: 0; }
-
-  
-
-  /* small hint */
-  .deck-hint {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--muted);
-    font-size: 0.9rem;
-    z-index: 4;
-  }
-
-  /* RESPONSIVE */
-  @media(max-width:900px) {
-    nav.tabs { display: none; }
-    .hamburger { display: flex; }
-    main#projects-main {
-      padding: 5rem 1rem 4rem;
-    }
-    .deck-wrap { height: 480px; }
-    .deck { width: 90%; height: 320px; }
-    .card { width: 90%; height: 260px; }
-    .deck-hint { bottom: -46px; font-size: 0.9rem; }
-  }
-
-  @media(max-width:480px) {
-    .deck-wrap { height: 420px; }
-    .deck { height: 300px; }
-    .card { height: 240px; }
-    .page-toggle { top: 5.2rem; }
-  }
-
-  /* Modal / other styles kept unchanged */
+  /* ===== MODAL ===== */
   .modal {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(2,6,23,0.9);
-    backdrop-filter: blur(5px);
-    z-index: 1000;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.9);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: all 0.3s ease;
+    z-index: 1000;
   }
+
   .modal.show {
     opacity: 1;
     visibility: visible;
   }
-  .modal-content {
-    background: var(--bg-2);
-    border: 1px solid var(--neon-2);
-    box-shadow: 0 0 30px rgba(15,111,255,0.3);
-    border-radius: 16px;
-    max-width: 800px;
-    width: 90vw;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
+
+.modal-content {
+  background: var(--bg-2);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 90%;
+  max-height: 90vh; /* <--- limit height to 90% of viewport */
+  overflow-y: auto;  /* <--- enable vertical scrolling */
+  color: var(--muted);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+  position: relative;
+}
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+
   .close-modal {
     position: absolute;
     top: 1rem;
     right: 1rem;
     background: none;
     border: none;
-    font-size: 2rem;
-    color: var(--muted);
+    font-size: 1.8rem;
+    color: var(--neon-1);
     cursor: pointer;
-    line-height: 1;
-    transition: color 0.3s ease;
-    z-index: 10;
   }
-  .close-modal:hover,
-  .close-modal:focus {
-    color: white;
-    outline: none;
+
+  .close-modal:hover {
+    color: var(--neon-2);
   }
-  .modal-body {
-    padding: 2rem;
-    overflow-y: auto;
+
+  /* ===== GitHub Button ===== */
+/* GitHub Button - Modal */
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  font-weight: 700;
+  color: #00e5ff; /* brighter neon color */
+  background: #24292f;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.github-btn img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.github-btn:hover {
+  background: #3b4045;
+  color: #0ff; /* brighter neon on hover */
+  box-shadow: 0 0 20px var(--neon-1), 0 0 40px var(--neon-2);
+  transform: translateY(-2px);
+}
+
+
+  .modal-content {
+  background: var(--bg-2);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 90%;
+  max-height: 90vh;   /* limit height */
+  overflow-y: auto;    /* vertical scroll if content is long */
+  color: var(--muted);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+  position: relative;
+}
+
+.modal-images {
+  display: flex;
+  flex-direction: column; /* vertical gallery */
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modal-images img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.modal-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 900; /* extra bold */
+  background: linear-gradient(90deg, #00e5ff, #0f6fff); /* brighter neon gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+ 
+}
+
+.modal-content {
+  background: linear-gradient(145deg, rgba(6,18,42,0.95), rgba(2,6,23,0.95)); /* slight gradient for depth */
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #e0e6f0; /* brighter text by default */
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.3), 0 0 80px rgba(15, 111, 255, 0.2); /* soft neon glow */
+  position: relative;
+  backdrop-filter: blur(6px); /* slight blur behind modal */
+  transition: all 0.3s ease;
+}
+
+
+.modal-content p {
+  color: #e0e6f0; /* brighter than muted for better readability */
+  font-size: 1rem; /* slightly larger */
+  font-weight: 600; /* bolder text */
+  line-height: 1.5;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* subtle depth */
+}
+
+
+  footer {
+    margin-top: 4rem;
+    padding: 1.5rem;
     color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+    border-top: 1px solid rgba(0,229,255,0.08);
   }
-  .modal-body img {
-    width: 100%;
-    max-height: 550px;
-    object-fit: cover;
+
+    #modalFooterButtons {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.7rem;
+    padding: 0.8rem 1.2rem;
+    border-top: 1.5px solid var(--neon-1);
+    background: var(--bg-2);
+  }
+  #modalFooterButtons a,
+  #modalFooterButtons button {
+    background: transparent;
+    border: 1.5px solid var(--neon-1);
+    color: var(--neon-1);
+    padding: 0.5rem 1.2rem;
     border-radius: 8px;
-    margin-bottom: 1.5rem;
-    background-color: var(--bg-1);
-  }
-  .modal-body h2 {
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    background: linear-gradient(90deg, var(--neon-2), var(--neon-1));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0 0 1rem;
-  }
-  .modal-body p {
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-  .modal-github-link {
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
-    border: 1.5px solid var(--neon-1);
-    background: none;
+    gap: 0.3rem;
+    user-select: none;
+    transition: background 0.3s, color 0.3s;
     text-decoration: none;
-    color: var(--neon-1);
-    font-weight: 700;
-    transition: all 0.2s ease;
   }
-  .modal-github-link:hover,
-  .modal-github-link:focus {
-    transform: translateY(-3px);
-    box-shadow: 0 0 18px rgba(0,229,255,0.25);
-    background: rgba(0,229,255,0.1);
+  #modalFooterButtons a:hover,
+  #modalFooterButtons button:hover,
+  #modalFooterButtons a:focus,
+  #modalFooterButtons button:focus {
+    background: var(--neon-1);
+    color: var(--bg-2);
     outline: none;
   }
-  .icon-svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
+:root{
+  --bg-1:#020617;
+  --bg-2:#06122a;
+  --neon-1:#00e5ff;
+  --neon-2:#0f6fff;
+  --muted:#cfd8e6; /* brighter text for readability */
+}
+
+/* ...keep rest of your CSS ... */
+
+.project-content p {
+  color: var(--muted); /* brighter than before */
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.modal-content p {
+  color: var(--muted); /* brighter modal description */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+footer {
+  margin-top: 4rem;
+  padding: 1.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  border-top: 1px solid rgba(0,229,255,0.08);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+  
+  @media(max-width:900px){
+    nav.tabs{display:none;}
+    .hamburger{display:flex;}
   }
-
-  footer { text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem; }
-
 </style>
 </head>
 <body>
@@ -420,406 +471,340 @@
   <a href="skills.html">Skills</a>
   <a href="experience.html">Experience</a>
   <a href="projects.html" class="active">Projects</a>
-  <!--<a href="pcbs.html">PCBs</a>-->
   <a href="about.html">About</a>
   <a href="resume.html">Resume</a>
   <a href="contact.html">Contact</a>
 </nav>
 
-<div class="hamburger" aria-label="Open navigation menu" role="button" tabindex="0" aria-expanded="false" aria-controls="mobile-menu">
+<div class="hamburger" role="button" tabindex="0" aria-expanded="false" aria-controls="mobile-menu">
   <span></span><span></span><span></span>
 </div>
 
-<nav id="mobile-menu" class="sidebar" aria-label="Mobile navigation" hidden>
+<nav id="mobile-menu" class="sidebar">
   <a href="index.html">Home</a>
   <a href="skills.html">Skills</a>
   <a href="experience.html">Experience</a>
   <a href="projects.html" class="active">Projects</a>
-  <!--<a href="pcbs.html">PCBs</a>-->
   <a href="about.html">About</a>
   <a href="resume.html">Resume</a>
   <a href="contact.html">Contact</a>
 </nav>
 
-<main id="projects-main" aria-label="Project list">
+<main id="projects-main">
 
   <div class="page-toggle">
     <a href="projects.html" class="toggle-btn active">Hardware & Software</a>
     <a href="pcbs.html" class="toggle-btn">PCB Gallery</a>
   </div>
 
-  <div class="belt-line" aria-hidden="true"></div>
+  <h1>Projects</h1>
 
-  <div class="deck-wrap" aria-live="polite">
-    <div class="deck" id="deck" role="list" aria-label="Projects deck">
-      <!-- Single set of project nodes - data attributes remain for modal -->
-      <div class="card" role="listitem" tabindex="0"
-        data-title="INSITE Bioprinter Project"
-        data-img="assets\INSITE.png"
-        data-desc="Awarded the highly competitive First Year Summer Research Fellowship (1 of 15 selected from over 1,000 first-year engineering students), supervised by Professor Axel Guenther. Redesigning the INSITE handheld bioprinter to improve reliability and clinical usability. Enhancing motion control systems and firmware for greater printing precision and real-time responsiveness. Prototyping intuitive control interfaces and iterating designs with PhD mentors to enhance surgical experience.">
-        <h3>INSITE Bioprinter</h3>
-        <p>Summer Research Fellowship</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
+  <section class="project-grid">
 
-      <div class="card" role="listitem" tabindex="0"
-        data-title="ZenVision"
-        data-img="assets\ZenVision Glasses.png"
-        data-desc="ZenVision is a wearable smart glasses system designed to support children with ADHD who struggle with impulsive verbal outbursts in the classroom. Built for a 9-year-old child, Megan, introduced to us by our clients, the system discreetly detects when she speaks out loudly—often a response to anxiety—and gently delivers visual reminders on the lens to help with self-regulation, without singling her out. The system uses an ESP32 microcontroller and MAX4466 microphone to monitor sound in real-time. A custom CNN (built with TensorFlow and trained on MFCCs) confirms whether the voice is Megan’s before triggering the prompt—achieving an average response time of just 1.93 seconds. A companion web dashboard (HTML/CSS/JS + Plotly.js) logs these events to a real-time database, enabling teachers and parents to track behavioral patterns and progress over time. Selected as a Top 20 Project (out of 187 teams) in the UofT ESP (APS 112) Showcase."
-        data-github="https://github.com/SemontiiMandal/ZenVision">
-        <h3>ZenVision</h3>
-        <p>ADHD Support Glasses</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="Auracle"
-        data-img="assets\Auracle Glasses and Gloves.jpg"
-        data-desc="Auracle is a wearable system that combines glasses and gloves for voice- and gesture-based music generation and control. The glasses are equipped with a voice recording module that captures user commands, which are then converted to text using Hugging Face’s speech-to-text model. This text prompt is passed to Hugging Face’s AudioLDM 2, a generative AI model, to create a unique music track tailored to the user’s request. Sentiment analysis is performed on the text prompt using TextBlob to determine the emotional tone, and this data is logged into Firebase’s Realtime Database and visualized on a Streamlit dashboard to track the user’s mood history. The gloves, equipped with accelerometer and gyroscope sensors, allow the user to control music functions such as skipping tracks, adjusting volume, and stopping the music through simple hand gestures. A full-stack application built with Streamlit manages user profiles, music generation history, and mood tracking."
-        data-github="https://github.com/SemontiiMandal/Auracle">
-        <h3>Auracle</h3>
-        <p>Voice and Gesture-Controlled Music Generation System</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="Wildfire Response"
-        data-img="assets\UTEK.jpg"
-        data-desc="Developed an automated response system in Python to rescue citizens in distress during wildfires and manage communication between users and dispatch centers. Integrated Twilio and Google Sheets APIs (gspread) to collect user details—such as injury severity, age, and location—via SMS and store them in a centralized data repository. Designed a priority-based dispatch algorithm that deploys rescuers by assessing priority according to Canada’s Ministry of Health’s Triage and Acuity Scale (CTAS) guidelines, ensuring efficient and accurate resource allocation."
-        data-github="https://github.com/SemontiiMandal/Automated-Emergency-Response-System-for-Wildfires">
-        <h3>Wildfire Response</h3>
-        <p>Automated Emergency Response System</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="Wearable Breathing Biofeedback Device"
-        data-img="assets\ut_biome_logo.jpg"
-        data-desc="We are collaborating with Prof. Christopher Bouwmeester (UofT IBME & ISTEP) to design a wearable biofeedback device that monitors real-time breathing patterns. The device aims to assist users in learning deep breathing techniques, such as diaphragmatic breathing. Using Machine Learning algorithms, it will analyze breathing patterns to detect potential diseases. The device incorporates an Arduino Nano, stretch sensors, FFT analysis, and buzzer feedback for real-time guidance and monitoring.">
-        <h3>Breathing Biofeedback</h3>
-        <p>UTBIOME (UofT Biomedical Engineering) Design Team</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="Kidney Stone Detection"
-        data-img="assets\ks.png"
-        data-desc="The Kidney Stone Detection System is a machine learning-based solution designed to predict kidney stones by analyzing the physical characteristics of urine. Using supervised learning classifiers, such as Logistic Regression, Decision Tree, and Support Vector Machine (SVM), the system detects potential abnormalities, offering a non-invasive and cost-effective alternative to imaging techniques like CT scans. Trained on a dataset of urine characteristics, the system achieved over 80% accuracy and an F1 score above 85%."
-        data-github="https://github.com/SemontiiMandal/Research-Paper-Kidney-Stones-JEI">
-        <h3>Kidney Stone Detection</h3>
-        <p>Published ML Research</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="Plant Disease Detector"
-        data-img="assets\leaves.jpeg"
-        data-desc="The Plant Disease Detection project uses deep learning to identify plant diseases from images. It leverages the ResNet50 model, a pre-trained Convolutional Neural Network (CNN), fine-tuned to classify images into 38 categories of plant diseases. The model is trained on an augmented dataset, incorporating techniques like zoom, shift, and flipping to prevent overfitting. With Python, TensorFlow, and Keras, the project achieves over 96.5% classification accuracy."
-        data-github="https://github.com/SemontiiMandal/Plant-Disease-Detection">
-        <h3>Plant Disease Detecting Algorithm</h3>
-        <p>Deep Learning / CNN</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="Malicious URL Detector"
-        data-img="assets\cs.jpg"
-        data-desc="The Malicious URL Detector is a machine learning project designed to classify URLs as either malicious or benign, enhancing cybersecurity. Using natural language processing (NLP) techniques, the model tokenizes URLs into features and applies algorithms like Logistic Regression and Support Vector Machines (SVM) for classification. The project utilizes Python and libraries such as Pandas, NumPy, and Scikit-learn for data manipulation, feature extraction, and model evaluation. By analyzing URL patterns, it aims to identify harmful links and strengthen online security."
-        data-github="https://github.com/SemontiiMandal/Malicious-URL-Detector">
-        <h3>Malicious URL Detector</h3>
-        <p>NYAS Junior Academy Finalist</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-      <div class="card" role="listitem" tabindex="0"
-        data-title="MNIST Digits"
-        data-img="assets\MNIST_dataset_example.png"
-        data-desc="The MNIST Handwritten Digits Recognition project uses deep learning to classify handwritten digits from the MNIST dataset. The model employs a neural network with dense layers and ReLU activation, trained using TensorFlow. It is designed to accurately recognize digits and can be extended for custom images. The network achieves 98.6% accuracy on the MNIST test set, with a three-layer architecture that includes flattening the input image, two hidden dense layers, and a final output layer with softmax activation."
-        data-github="https://github.com/SemontiiMandal/MNIST-Classification">
-        <h3>MNIST Digits</h3>
-        <p>ML Classification</p>
-        <div class="meta">Click to Open. Swipe to view next.</div>
-      </div>
-
-    </div>
-
-    <!--<div class="deck-hint" aria-hidden="true">Click to Open. Swipe to move it to the bottom.</div>-->
+<div class="project-card" onclick="openModal('art')">
+  <div class="project-image">
+    <img src="assets\art.png" alt="Autonomous Rover">
   </div>
-</main>
-
-<!-- MODAL -->
-<div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" hidden>
-  <div class="modal-content">
-    <button class="close-modal" aria-label="Close project details">&times;</button>
-    <div class="modal-body">
-      <img id="modal-img" src="" alt="" />
-      <h2 id="modal-title"></h2>
-      <p id="modal-desc"></p>
-      <a id="modal-github" href="#" target="_blank" rel="noopener" class="modal-github-link" aria-label="View GitHub repository" style="display:none;">
-        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 .5C5.73.5.75 5.48.75 11.74c0 4.9 3.18 9.06 7.58 10.53.55.1.75-.24.75-.53 0-.26-.01-1.13-.02-2.05-3.08.67-3.73-1.49-3.73-1.49-.5-1.28-1.22-1.62-1.22-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.97 1.66 2.55 1.18 3.17.9.1-.7.38-1.18.69-1.45-2.46-.28-5.05-1.23-5.05-5.47 0-1.21.43-2.2 1.13-2.98-.12-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13.88-.25 1.82-.38 2.75-.38.93 0 1.87.13 2.75.38 2.1-1.43 3.02-1.13 3.02-1.13.6 1.52.23 2.64.11 2.92.7.78 1.13 1.77 1.13 2.98 0 4.24-2.6 5.19-5.07 5.46.39.34.73 1.02.73 2.06 0 1.49-.01 2.7-.01 3.07 0 .29.2.64.76.53C20.07 20.8 23.25 16.64 23.25 11.74 23.25 5.48 18.27.5 12 .5z"/>
-        </svg>
-        GitHub
-      </a>
+  <div class="project-content">
+    <h3>Autonomous Rover Embedded Systems</h3>
+    <p>Embedded control and sensor system for an IGVC (Intelligent Ground Vehicle Competition) autonomous rover. Developing ROS2-based firmware for Linux, Arduino, and Raspberry Pi platforms. Designing CAN/I2C/SPI motor and sensor interfaces, implementing real-time control algorithms, and integrating power management circuitry. Creating custom PCBs and performing full system integration for autonomous navigation. Part of University of Toronto Robotics Association (UTRA).</p>
+    <div class="tags">
+      <span class="tag">Embedded/Firmware</span>
+      <span class="tag">Robotics (ROS)</span>
+      <span class="tag">Control</span>
     </div>
   </div>
 </div>
 
-<footer>&copy; Sam — ECE @ UofT</footer>
+<div class="project-card" onclick="openModal('bioprinter')">
+  <div class="project-image">
+    <img src="assets\insite_device.png" alt="Handheld Bioprinter">
+  </div>
+  <div class="project-content">
+    <h3>Handheld Bioprinter Control System</h3>
+    <p>A compact, handheld bioprinter designed for precise multi-motor actuation. Developed real-time firmware on an STM32-based Arduino Portenta to control motors via CANopen, implementing ISR-driven emergency stop with 10 ms resolution. Engineered a dual-protocol integration with I2C touchscreen GUI for intuitive surgeon-device interaction. Designed custom PCBs, validated circuits using LTSpice, and debugged timing/signals with oscilloscopes and logic analyzers.</p>
+    <div class="tags">
+      <span class="tag">Embedded/Firmware</span>
+      <span class="tag">PCB Design</span>
+      <span class="tag">Motion Control</span>
+      <span class="tag">Graphical Interface Design</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('microfluidics')">
+  <div class="project-image">
+    <img src="assets/uheme.png" alt="ZenVision Glasses">
+  </div>
+  <div class="project-content">
+    <h3>Microfluidic Cell Analysis Device</h3>
+    <p>A microfluidic chip for real-time blood cell analysis. Developing STM32-based embedded control systems for peripheral actuation, integrating high-resolution imaging modules, and implementing edge machine learning for real-time cell classification. Designing custom PCBs for sensor and actuator integration and optimizing communication protocols (CAN, I2C, SPI, UART) for real-time data transfer. Part of University of Toronto Biomedical Engineering Design Team (UTBIOME).</p>
+    <div class="tags">
+      <span class="tag">Embedded/Firmware</span>
+      <span class="tag">AI/Computer Vision</span>
+      <span class="tag">Biomedical Device</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('zenvision')">
+  <div class="project-image">
+    <img src="assets\ZenVision Glasses.png" alt="ADHD Glasses">
+  </div>
+  <div class="project-content">
+    <h3>ZenVision - Discreet ADHD Support</h3>
+    <p>Smart glasses to detect verbal outbursts in children with ADHD, providing real-time feedback for behavioral tracking. Implemented MFCC-based CNN on ESP32 for audio event classification (latency: 1.93 s). Developed a real-time dashboard using Firebase and Plotly.js for behavioral data visualization. Integrated the system end-to-end, combining on-device ML inference, cloud data storage, and interactive analytics.</p>
+    <div class="tags">
+      <span class="tag">AI/Convolutional Neural Nets</span>
+       <span class="tag">Edge ML - On Device Deployment</span>
+      <span class="tag">Wearable</span>
+      <span class="tag">Health Tech</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('auracle')">
+  <div class="project-image">
+    <img src="assets\Auracle Glasses and Gloves.jpg" alt="Wildfire Response">
+  </div>
+  <div class="project-content">
+    <h3>AI Glasses/Gloves Wearable</h3>
+    <p>AI-powered wearable (glasses + gloves) for music generation and control via voice and hand gestures. Implemented speech-to-text pipelines, HuggingFace AudioLDM 2 for audio generation, and sentiment analysis models for adaptive music control. Designed gesture recognition system to map hand inputs to real-time control signals. Winner, Best Use of Gen AI, MakeUofT 2025.</p>
+    <div class="tags">
+      <span class="tag">Gen AI</span>
+      <span class="tag">Wearable</span>
+      <span class="tag">Gesture/Voice Control</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('wildfire')">
+  <div class="project-image">
+    <img src="assets\UTEK.jpg" alt="widfire">
+  </div>
+  <div class="project-content">
+    <h3>Automated Wildfire Response System</h3>
+    <p>Python-based system automating wildfire alert and response coordination. Integrated Twilio for SMS alerts, Google Sheets API for live data synchronization, and implemented automated prioritization of rescue tasks. Enabled real-time communication and situational awareness for emergency management. 3rd Place, Programming, UTEK 2025.</p>
+    <div class="tags">
+      <span class="tag">SMS</span>
+      <span class="tag">Automated Emergency Response</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('breathing')">
+  <div class="project-image">
+    <img src="" alt="">
+  </div>
+  <div class="project-content">
+    <h3>Breathing Biofeedback Device</h3>
+    <p>A wearable device for early-stage COPD detection using stretch sensors and signal processing. Developed real-time embedded firmware for Arduino to collect and process sensor data, applied FFT for breathing pattern analysis, and deployed lightweight ML models for anomaly detection. Built cross-platform mobile apps (iOS/Objective-C, Android/Java) with Bluetooth connectivity for live data visualization and user feedback. Part of University of Toronto Biomedical Engineering Design Team (UTBIOME).</p>
+    <div class="tags">
+      <span class="tag">Embedded/Firmware</span>
+      <span class="tag">ML</span>
+      <span class="tag">Biomedical</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('kidney')">
+  <div class="project-image">
+    <img src="assets\ks.png" alt="Kidney Stone Detection">
+  </div>
+  <div class="project-content">
+    <h3>Kidney Stone Risk ML Model</h3>
+    <p>Developed a machine learning model to predict kidney stone risk from urine analysis. Implemented preprocessing, feature engineering, and model training pipelines using Scikit-learn. Achieved clinically relevant predictive accuracy and published in the Journal of Emerging Investigators.</p>
+    <div class="tags">
+      <span class="tag">ML</span>
+      <span class="tag">Healthcare</span>
+      <span class="tag">Data Science</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('plant')">
+  <div class="project-image">
+    <img src="assets\leaves.jpeg" alt="Plant Disease Detector">
+  </div>
+  <div class="project-content">
+    <h3>Plant Disease Detection</h3>
+    <p>Deep learning model (ResNet50) for identifying plant diseases from images. Achieves 96.5% accuracy using augmented datasets to improve classification performance.</p>
+    <div class="tags">
+      <span class="tag">Deep Learning</span>
+      <span class="tag">Computer Vision</span>
+      <span class="tag">Agritech</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('malicious')">
+  <div class="project-image">
+    <img src="assets\cs.jpg" alt="Malicious URL Detector">
+  </div>
+  <div class="project-content">
+    <h3>Malicious URL Detector</h3>
+    <p>ML-based system to classify URLs as malicious or benign using NLP and classifiers like Logistic Regression and SVM. Enhances cybersecurity by detecting harmful links. Winner, New York Academy of Sciences (NYAS), Junior Academy, 2023 Spring Challenge.</p>
+    <div class="tags">
+      <span class="tag">ML</span>
+      <span class="tag">Cybersecurity</span>
+      <span class="tag">NLP</span>
+    </div>
+  </div>
+</div>
+
+<div class="project-card" onclick="openModal('MNIST')">
+  <div class="project-image">
+    <img src="assets\MNIST_dataset_example.png" alt="MNIST Digits">
+  </div>
+  <div class="project-content">
+    <h3>MNIST Digits Recognition</h3>
+    <p>Deep learning neural network trained on MNIST dataset for handwritten digit recognition. Achieves 98.6% accuracy with a three-layer architecture using TensorFlow.</p>
+    <div class="tags">
+      <span class="tag">Deep Learning</span>
+      <span class="tag">Computer Vision</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content" id="modal-content">
+    <button class="close-modal" onclick="closeModal()">&times;</button>
+  </div>
+</div>
+</section>
+
+<footer style="text-align:center;padding:1.5rem 0;color:var(--muted);font-size:0.85rem;">
+  &copy; Sam — ECE @ UofT
+</footer>
 
 <script>
-  // Hamburger toggle (same behavior as other pages)
-  const hamburger = document.querySelector('.hamburger');
-  const sidebar = document.getElementById('mobile-menu');
+  const modal = document.getElementById("modal");
+  const modalContent = document.getElementById("modal-content");
 
-  function toggleMenu(){
-    const isOpen = sidebar.classList.toggle('show');
-    if(isOpen) sidebar.removeAttribute('hidden'); else sidebar.setAttribute('hidden','');
-    hamburger.setAttribute('aria-expanded', isOpen);
+function openModal(project) {
+  let githubLink = "";
+  let images = [];
+  let title = "";
+  let description = "";
+
+  switch(project) {
+    case "art":
+      title = "Autonomous Rover Embedded Systems";
+      images = ["assets/art.png"];
+      description = "Embedded control and sensor system for an IGVC autonomous rover. Developing ROS2-based firmware for Linux, Arduino, and Raspberry Pi platforms. Designing CAN/I2C/SPI motor and sensor interfaces, implementing real-time control algorithms, and integrating power management circuitry. Creating custom PCBs and performing full system integration for autonomous navigation. Part of University of Toronto Robotics Association (UTRA).";
+      githubLink = "";
+      break;
+
+    case "bioprinter":
+      title = "Handheld Bioprinter Control System";
+      images = ["assets/insite_device.png", "assets/INSITE.png", "assets/insite_poster.png"];
+      description = "A compact, handheld bioprinter designed for precise multi-motor actuation. Developed real-time firmware on an STM32-based Arduino Portenta to control motors via CANopen, implementing ISR-driven emergency stop with 10 ms resolution. Engineered a dual-protocol integration with I2C touchscreen GUI for intuitive surgeon-device interaction. Designed custom PCBs, validated circuits using LTSpice, and debugged timing/signals with oscilloscopes and logic analyzers.";
+      githubLink = "";
+      break;
+
+    case "microfluidics":
+      title = "Microfluidic Cell Analysis Device";
+      images = ["assets/uheme.png"];
+      description = "A microfluidic chip for real-time blood cell analysis. Developing STM32-based embedded control systems for peripheral actuation, integrating high-resolution imaging modules, and implementing edge machine learning for real-time cell classification. Designing custom PCBs for sensor and actuator integration and optimizing communication protocols (CAN, I2C, SPI, UART) for real-time data transfer. Part of University of Toronto Biomedical Engineering Design Team (UTBIOME).";
+      githubLink = ""; 
+      break;
+
+    case "zenvision":
+      title = "ZenVision - Discreet ADHD Support";
+      images = ["assets/ZenVision Glasses.png", "assets/Megan's Dashboard.png", "assets/Plots.png"];
+      description = "Smart glasses to detect verbal outbursts in children with ADHD, providing real-time feedback for behavioral tracking. Implemented MFCC-based CNN on ESP32 for audio event classification (latency: 1.93 s). Developed a real-time dashboard using Firebase and Plotly.js for behavioral data visualization. Integrated the system end-to-end, combining on-device ML inference, cloud data storage, and interactive analytics.";
+      githubLink = "https://github.com/SemontiiMandal/ZenVision";
+      break;
+
+    case "auracle":
+      title = "AI Glasses/Gloves Wearable";
+      images = ["assets/Auracle Glasses and Gloves.jpg"];
+      description = "AI-powered wearable (glasses + gloves) for music generation and control via voice and hand gestures. Implemented speech-to-text pipelines, HuggingFace AudioLDM 2 for audio generation, and sentiment analysis models for adaptive music control. Designed gesture recognition system to map hand inputs to real-time control signals. Winner, Best Use of Gen AI, MakeUofT 2025.";
+      githubLink = "https://github.com/SemontiiMandal/Auracle";
+      break;
+
+    case "breathing":
+      title = "Breathing Biofeedback Device";
+      images = []; // Add images if available
+      description = "A wearable device for early-stage COPD detection using stretch sensors and signal processing. Developed real-time embedded firmware for Arduino to collect and process sensor data, applied FFT for breathing pattern analysis, and deployed lightweight ML models for anomaly detection. Built cross-platform mobile apps (iOS/Objective-C, Android/Java) with Bluetooth connectivity for live data visualization and user feedback. Part of University of Toronto Biomedical Engineering Design Team (UTBIOME).";
+      githubLink = ""; 
+      break;
+
+    case "wildfire":
+      title = "Automated Wildfire Response System";
+      images = ["assets/UTEK.jpg"];
+      description = "Python-based system automating wildfire alert and response coordination. Integrated Twilio for SMS alerts, Google Sheets API for live data synchronization, and implemented automated prioritization of rescue tasks. Enabled real-time communication and situational awareness for emergency management. 3rd Place, Programming, UTEK 2025.";
+      githubLink = "https://github.com/SemontiiMandal/Automated-Emergency-Response-System-for-Wildfires";
+      break;
+
+    case "kidney":
+      title = "Kidney Stone Risk ML Model";
+      images = ["assets/ks.png"];
+      description = "Developed a machine learning model to predict kidney stone risk from urine analysis. Implemented preprocessing, feature engineering, and model training pipelines using Scikit-learn. Achieved clinically relevant predictive accuracy and published in the Journal of Emerging Investigators.";
+      githubLink = "https://github.com/SemontiiMandal/Research-Paper-Kidney-Stones-JEI"; 
+      break;
+
+    case "plant":
+      title = "Plant Disease Detection";
+      images = ["assets/leaves.jpeg"];
+      description = "Deep learning model (ResNet50) for identifying plant diseases from images. Achieves 96.5% accuracy using augmented datasets to improve classification performance.";
+      githubLink = "https://github.com/SemontiiMandal/Plant-Disease-Detection"; // Add GitHub link if available
+      break;
+
+    case "malicious":
+      title = "Malicious URL Detector";
+      images = ["assets/cs.jpg"];
+      description = "ML-based system to classify URLs as malicious or benign using NLP and classifiers like Logistic Regression and SVM. Enhances cybersecurity by detecting harmful links. Winner, New York Academy of Sciences (NYAS), Junior Academy, 2023 Spring Challenge.";
+      githubLink = "https://github.com/SemontiiMandal/Malicious-URL-Detector"; // Add GitHub link if available
+      break;
+
+    case "MNIST":
+      title = "MNIST Digits Recognition";
+      images = ["assets/MNIST_dataset_example.png"];
+      description = "Deep learning neural network trained on MNIST dataset for handwritten digit recognition. Achieves 98.6% accuracy with a three-layer architecture using TensorFlow.";
+      githubLink = "https://github.com/SemontiiMandal/MNIST-Classification"; // Add GitHub link if available
+      break;
+
+    default:
+      title = "Project";
+      images = [];
+      description = "";
+      githubLink = "";
   }
-  hamburger.addEventListener('click', toggleMenu);
-  hamburger.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(); }
-  });
 
-  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    sidebar.classList.remove('show'); sidebar.setAttribute('hidden',''); hamburger.setAttribute('aria-expanded', false);
-  }));
+  // Build images HTML
+  let imagesHTML = images.map(src => `<img src="${src}" alt="${title} image">`).join("");
 
-  // Modal functionality (unchanged logic)
-  const modal = document.getElementById('project-modal');
-  const modalTitle = modal.querySelector('#modal-title');
-  const modalDesc = modal.querySelector('#modal-desc');
-  const modalImg = modal.querySelector('#modal-img');
-  const modalGitHub = modal.querySelector('#modal-github');
-  const closeBtn = modal.querySelector('.close-modal');
+  modalContent.innerHTML = `
+    <button class="close-modal" onclick="closeModal()">&times;</button>
+    <div class="modal-images">
+      ${imagesHTML}
+    </div>
+    <h2>${title}</h2>
+    <p>${description}</p>
+    ${githubLink ? `<a href="${githubLink}" target="_blank" class="github-btn">
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo"> View on GitHub
+    </a>` : ""}
+  `;
 
-  function openModalFromCard(node) {
-    const title = node.getAttribute('data-title');
-    const desc = node.getAttribute('data-desc');
-    const img = node.getAttribute('data-img');
-    const github = node.getAttribute('data-github');
-
-    modalTitle.textContent = title;
-    modalDesc.textContent = desc;
-    modalImg.src = img;
-    modalImg.alt = title + " screenshot";
-
-    if(github) {
-      modalGitHub.href = github;
-      modalGitHub.style.display = 'inline-flex';
-    } else {
-      modalGitHub.style.display = 'none';
-    }
-
-    modal.hidden = false;
-    modal.classList.add('show');
-    document.body.classList.add('modal-open');
-    closeBtn.focus();
+  modal.classList.add("show");
+}
+function closeModal() {
+    modal.classList.remove("show"); // Hide modal
   }
 
-  closeBtn.addEventListener('click', closeModal);
+  // Optional: close modal on clicking outside content
   modal.addEventListener('click', e => {
     if (e.target === modal) closeModal();
   });
-  window.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && !modal.hidden) {
-      closeModal();
-    }
-  });
-  function closeModal() {
-    modal.classList.remove('show');
-    modal.hidden = true;
-    document.body.classList.remove('modal-open');
-  }
-
-  // Deck logic: stack cards visually and support swipe-to-bottom
-(function(){
-  const deck = document.getElementById('deck');
-  let cards = Array.from(deck.querySelectorAll('.card'));
-  let isPointerDown = false;
-  let startX = 0, startY = 0;
-  let currentCard = null;
-  let dragId = null;
-  let dragged = false;
-  const SWIPE_THRESHOLD = 80; // pixels to trigger swipe
-  const STACK_OFFSET_Y = 16; // px vertical offset per card
-  const STACK_SCALE_STEP = 0.02; // scale reduction per depth
-  const MAX_DEPTH_SHOW = 6; // how many cards to style (the rest hidden under)
-
-  function renderStack(animated = true) {
-    cards = Array.from(deck.querySelectorAll('.card'));
-    cards.forEach((card, idx) => {
-      const depth = idx;
-      const capped = Math.min(depth, MAX_DEPTH_SHOW);
-      const translateY = capped * STACK_OFFSET_Y;
-      const scale = 1 - capped * STACK_SCALE_STEP;
-      const rotate = (depth % 2 === 0) ? (capped * 0.4) : (-capped * 0.4);
-      const zIndex = (cards.length - idx) + 100;
-      card.style.zIndex = zIndex;
-      card.style.setProperty('--offsetY', `${translateY}px`);
-      card.classList.toggle('top', idx === 0);
-
-      if(animated) {
-        card.style.transition = 'transform 280ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease, opacity 220ms ease';
-      } else {
-        card.style.transition = 'none';
-      }
-
-      card.style.transform = `translate(-50%, -50%) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
-      card.style.opacity = (depth > 8) ? 0 : 1;
-      card.style.pointerEvents = (idx === 0) ? 'auto' : 'none';
-      // clear any lingering drag shadow on non-top cards
-      if (idx !== 0) card.style.boxShadow = '';
-    });
-  }
-
-  // Move top card to bottom of DOM order (robust)
-function moveTopToBottom(direction = 'left') {
-  if (cards.length === 0) return;
-  const top = cards[0];
-
-  // clear inline transforms from dragging
-  top.style.transform = '';
-  top.style.transition = '';
-  void top.offsetWidth; // force reflow
-
-  // animate out
-  if (direction === 'left') top.classList.add('fly-left');
-  else if (direction === 'right') top.classList.add('fly-right');
-  else top.classList.add('fly-up');
-
-  deck.style.pointerEvents = 'none';
-
-  const finish = () => {
-    top.removeEventListener('transitionend', finish);
-    top.classList.remove('fly-left','fly-right','fly-up');
-    top.style.transition = 'none';
-    top.style.boxShadow = '';
-
-    // temporarily hide the card while moving it
-    top.style.visibility = 'hidden';
-
-    // append to bottom
-    deck.appendChild(top);
-
-    // re-render, then fade it back in
-    setTimeout(() => {
-      renderStack(true);
-      top.style.visibility = 'visible';
-      deck.style.pointerEvents = 'auto';
-    }, 25);
-  };
-
-  top.addEventListener('transitionend', finish);
-  setTimeout(finish, 700); // fallback safety
-}
-
-
-  function bindCardEvents(card) {
-    // avoid attaching multiple duplicates
-    if (card.dataset.bound) return;
-    card.dataset.bound = 'true';
-
-    card.addEventListener('click', (e) => {
-      if (dragged) { dragged = false; return; }
-      openModalFromCard(card);
-    });
-    card.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModalFromCard(card);
-      }
-    });
-
-    card.addEventListener('pointerdown', (e) => {
-      // only top card draggable
-      if (!card.classList.contains('top')) return;
-      isPointerDown = true;
-      dragged = false;
-      currentCard = card;
-      startX = e.clientX;
-      startY = e.clientY;
-      dragId = e.pointerId;
-      try { card.setPointerCapture(dragId); } catch(_) {}
-      // remove transition so we move it exactly with pointer
-      card.style.transition = 'none';
-    });
-
-    card.addEventListener('pointermove', (e) => {
-      if (!isPointerDown || e.pointerId !== dragId || !currentCard) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      const rotate = Math.max(-35, Math.min(35, dx * 0.12));
-      currentCard.style.transform = `translate(-50%, -50%) translate(${dx}px, ${dy}px) rotateZ(${rotate}deg)`;
-      currentCard.style.boxShadow = '0 30px 80px rgba(0,0,0,0.75), 0 0 40px rgba(15,111,255,0.18)';
-      dragged = Math.abs(dx) > 6 || Math.abs(dy) > 6;
-    });
-
-    card.addEventListener('pointerup', (e) => {
-      if (!currentCard || e.pointerId !== dragId) return;
-      isPointerDown = false;
-      try { currentCard.releasePointerCapture(dragId); } catch(_) {}
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-
-      if (Math.abs(dx) > SWIPE_THRESHOLD || Math.abs(dy) > SWIPE_THRESHOLD) {
-        const dir = (Math.abs(dx) > Math.abs(dy)) ? (dx > 0 ? 'right' : 'left') : 'up';
-        // clear the drag state on this card (so it's ready for CSS animation)
-        // do NOT leave transition:none inlined — moveTopToBottom will clear it.
-        moveTopToBottom(dir);
-      } else {
-        // return to stack
-        currentCard.style.transition = 'transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease';
-        // clear box shadow and let renderStack snap it back
-        currentCard.style.boxShadow = '';
-        renderStack(true);
-      }
-
-      // reset pointer state
-      setTimeout(()=> { dragged = false; }, 50);
-      currentCard = null;
-      dragId = null;
-    });
-
-    card.addEventListener('pointercancel', (e) => {
-      if (!currentCard || e.pointerId !== dragId) return;
-      isPointerDown = false;
-      try { currentCard.releasePointerCapture(dragId); } catch(_) {}
-      currentCard.style.boxShadow = '';
-      renderStack(true);
-      currentCard = null;
-      dragId = null;
-    });
-
-    card.addEventListener('contextmenu', (e) => e.preventDefault());
-  }
-
-  function initDeck() {
-    cards = Array.from(deck.querySelectorAll('.card'));
-    cards.forEach((c) => bindCardEvents(c));
-    renderStack(false);
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (document.body.classList.contains('modal-open')) return;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === ' ') {
-      e.preventDefault();
-      moveTopToBottom(e.key === 'ArrowRight' ? 'right' : 'left');
-    }
-  });
-
-  initDeck();
-  window.addEventListener('resize', () => renderStack(false));
-})();
-
-
-  // Accessibility: focus styles and trap no additional modifications required
-
 </script>
 
 </body>
 </html>
+
+
 
 
 
