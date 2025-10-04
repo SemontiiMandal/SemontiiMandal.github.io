@@ -1,15 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-17P7VBGTPH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-17P7VBGTPH');
-</script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sam — Experience</title>
@@ -188,6 +180,91 @@
       display: flex;
     }
   }
+
+  :root{
+  --bg-1:#020617;
+  --bg-2:#06122a;
+  --neon-1:#00e5ff;
+  --neon-2:#0f6fff;
+  --text-main:#e0f7ff; /* brighter main text */
+  --muted:#9aa7b6;
+}
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  font-family: Inter, sans-serif;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+main {
+  max-width: 960px;
+  margin: 8rem auto 4rem;
+  padding: 2rem;
+  background: rgba(0, 229, 255, 0.18); /* stronger neon glow */
+  border-radius: 16px;
+  box-shadow: 0 0 50px rgba(0, 229, 255, 0.4);
+}
+
+h1 {
+  font-size: clamp(2rem, 2vw, 2rem);
+  background: linear-gradient(90deg, var(--neon-2), var(--neon-1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
+}
+
+.job {
+  margin-bottom: 2rem;
+  background: rgba(0,0,0,0.25); /* slightly lighter than before */
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 25px rgba(0,229,255,0.25);
+  transition: box-shadow 0.3s ease;
+}
+.job:hover {
+  box-shadow: 0 0 50px rgba(0, 102, 255, 0.6); /* stronger hover glow */
+}
+
+.job-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--neon-1);
+  margin-bottom: 0.3rem;
+}
+
+.job-company {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #c0d6f0; /* lighter than muted for better readability */
+  margin-bottom: 0.5rem;
+}
+
+.job-dates,
+.job-location {
+  font-size: 0.9rem;
+  color: #a8c0e0; /* slightly brighter than muted */
+  margin-bottom: 1rem;
+}
+
+.job-desc {
+  color: var(--text-main); /* bright and readable */
+  font-size: 1rem;
+  line-height: 1.5;
+  text-shadow: 0 0 2px rgba(0, 229, 255, 0.2); /* subtle neon glow for text */
+}
+
+/* navigation and hamburger unchanged */
+
+footer {
+  text-align: center;
+  padding: 1.5rem 0;
+  color: #a8c0e0;
+  font-size: 0.85rem;
+  user-select: none;
+}
+
 </style>
 
 </head>
@@ -225,12 +302,12 @@
   <h1>Work Experience</h1>
 
 <div class="job">
-  <div class="job-title">Summer Research Intern – Guenther Lab</div>
+  <div class="job-title">Embedded Systems & Firmware Intern – Handheld Bioprinter, Guenther Lab</div>
   <div class="job-company">First Year Summer Research Fellow, University of Toronto</div>
   <div class="job-dates">May 2025 – Present</div>
   <div class="job-location">Toronto, ON</div>
   <div class="job-desc">
-    Awarded the highly competitive First Year Summer Research Fellowship (1 of 15 selected from over 1,000 first-year engineering students), supervised by Professor Axel Guenther. Developed real-time firmware on Arduino Portenta H7 to control Faulhaber motors via CAN Bus using CANopen (mbed C++). Designed dual-protocol system integrating Matrix Orbital GTT touchscreen (I2C) with synchronized motor CAN Bus. Created Graphical User Interface using GTT Designer and C++ libraries to enable intuitive surgeon-device interaction, integrating user-centric UX principles for clinical applications. Implemented emergency stop logic via interrupts and motor synchronization with 10ms resolution. Designing PCB modules in Altium Designer for custom control interfaces.
+    Awarded the highly competitive First Year Summer Research Fellowship (1 of 15 selected from over 1,000 first-year engineering students), supervised by Professor Axel Guenther. Developed real-time firmware on STM32-Based Arduino Portenta to control motor CAN Bus using CANopen (mbed C++) & implemented ISR-driven emergency-stop (10 ms resolution) for multi-motor shutdown. Engineered dual-protocol system integrating I2C touchscreen with synchronized CAN motor control; Debugged and verified timing/signals with oscilloscopes, logic analyzers and multimeters. Built GUI in C/C++ for surgeon-device interaction, applying UI/UX design principles to reduce cognitive overload. Designed custom PCBs in Altium Designer, ran LTSpice simulations for circuit validation & performed soldering tasks.
   </div>
 </div>
 
@@ -249,18 +326,27 @@
 <h1>Leadership & Design Teams</h1>
 
 <div class="job">
-  <div class="job-title">Microfluidic Blood Cell Analysis Design Co-Lead</div>
+  <div class="job-title">Embedded Systems & Computer Vision Lead, Microfluidic Cell Analysis Co-Lead</div>
   <div class="job-company">University of Toronto Biomedical Engineering Design Team (UTBIOME)</div>
   <div class="job-dates">Sept 2025 – Present</div>
   <div class="job-location">Toronto, ON</div>
   <div class="job-desc">
-    Co-leading a 6+ member design team developing a microfluidic chip platform for automated blood cell analysis.Engineering flow-control hardware and circuit models, and exploring integration of optical imaging hardware with exploratory Machine Learning pipelines for automated cell detection and counting.
-    Overseeing project milestones, technical deliverables, and collaborating with Farcus Lab faculty and researchers to validate design approaches.
+    Co-leading a 25-member team developing a microfluidic-chip device; designing STM32-based embedded control systems, custom PCBs, & interfacing peripherals with data transfer over communication protocols (CAN, I2C, SPI, UART). Integrating high-resolution imaging modules with real-time computer vision, and edge ML for blood cell analysis.
   </div>
 </div>
 
 <div class="job">
-  <div class="job-title">Team Lead, ZenVision – APS112</div>
+  <div class="job-title">Embedded Systems Recruit — Autonomous Rover Team</div>
+  <div class="job-company">University of Toronto Robotics Association (UTRA)</div>
+  <div class="job-dates">Sept 2025 – Present</div>
+  <div class="job-location">Toronto, ON</div>
+  <div class="job-desc">
+    Developing ROS2-based embedded systems for IGVC rover: Designing C/C++ firmware on Linux, Arduino/Raspberry Pi, & implementing CAN/I2C/SPI interfaces; Designing PCBs, power management, motor/sensor control.
+  </div>
+</div>
+
+<div class="job">
+  <div class="job-title">Team Lead, ZenVision — APS112</div>
   <div class="job-company">Engineering Strategies and Practices (ESP), University of Toronto</div>
   <div class="job-dates">Jan 2025 – Apr 2025</div>
   <div class="job-location">Toronto, ON</div>
@@ -269,6 +355,17 @@
   </div>
 </div>
 
+<div class="job">
+  <div class="job-title">Design Team Member — Software/Embedded Dev, Breathing Biofeedback</div>
+  <div class="job-company">University of Toronto Biomedical Engineering Design Team (UTBIOME)</div>
+  <div class="job-dates">Sept 2024 – Sept 2025</div>
+  <div class="job-location">Toronto, ON</div>
+  <div class="job-desc">
+    Designed wearable breathing biofeedback device (stretch sensors, Arduino, FFT, ML) for early COPD detection. Built cross-platform mobile apps (iOS/Objective-C, Android/Java) with Bluetooth control & real-time data display.
+  </div>
+</div>
+
+<h1>Involvement with UofT Engineering</h1>
 <div class="job">
   <div class="job-title">Orientation Leader — F!rosh 2T5, Zeta Subgroup</div>
   <div class="job-company">First Year Engineering Orientation, University of Toronto </div>
@@ -281,13 +378,23 @@
 </div>
 
 <div class="job">
-  <div class="job-title">Design Team Member — Software/Embedded Dev, Breathing Biofeedback</div>
-  <div class="job-company">University of Toronto Biomedical Engineering Design Team (UTBIOME)</div>
-  <div class="job-dates">Sept 2024 – Sept 2025</div>
+  <div class="job-title">ECE Ambassador</div>
+  <div class="job-company">Electrical & Computer Engineering Department, University of Toronto </div>
+  <div class="job-dates">Sept 2025 – Present</div>
   <div class="job-location">Toronto, ON</div>
   <div class="job-desc">
-    Designed wearable breathing biofeedback device (stretch sensors, Arduino, FFT, ML) for early COPD detection. Built cross-platform mobile apps (iOS/Objective-C, Android/Java) with Bluetooth control & real-time data display.
-  </div>
+  Represent the ECE department to prospective students through campus tours, info sessions, and outreach events; provide guidance on curriculum, student life, and career opportunities.
+    </div>
+</div>
+
+<div class="job">
+  <div class="job-title">Mentor</div>
+  <div class="job-company">Hi-Skule</div>
+  <div class="job-dates">Sept 2025 – Present</div>
+  <div class="job-location">Toronto, ON</div>
+  <div class="job-desc">
+ Mentor high school students in STEM through design challenges and outreach events, promoting engineering and providing guidance on STEM exploration.
+    </div>
 </div>
 
   <!-- Add more experience entries as needed -->
@@ -331,4 +438,3 @@
 
 </body>
 </html>
-
