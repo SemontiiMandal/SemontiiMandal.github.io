@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sam — PCB Projects</title>
 
+
 <!-- Import model-viewer web component for 3D .glb rendering -->
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
@@ -26,6 +27,7 @@
     overflow-x: hidden;
   }
 
+  /* === NAV TABS (top-right) === */
   nav.tabs {
     position: fixed;
     top: 1rem;
@@ -517,9 +519,23 @@
       view3d: "assets/ESP32 with USBC PCB V1I1.glb",
       //github: "https://github.com/example/pcb-gamma"
     },  
+
+    {
+      id: 2,
+      title: "Power Converter",
+      description: "5V to 3.3V Step Down",
+      images: {
+        top: "assets/StepDown Top.png",
+        bottom: "assets/StepDown Bottom.png",
+        routing2d: "assets/StepDown Routing.png",
+        schematic: "assets/StepDown Schematic.png"
+      },
+      view3d: "assets/PowerConverter.glb",
+      //github: "https://github.com/example/pcb-beta"
+    },
   
   {
-      id: 2,
+      id: 3,
       title: "LED Chaser",
       description: "An LED Chaser PCB",
       images: {
@@ -531,20 +547,20 @@
       view3d: "assets/LED_Chaser.glb",
       //github: "https://github.com/example/pcb-alpha"
     },
+    
     {
-      id: 3,
-      title: "Power Converter",
-      description: "5V to 3.3V Step Down",
+      id: 4,
+      title: "ATmega Board",
+      description: "Custom Board with ATmega328P",
       images: {
-        top: "assets/StepDown Top.png",
-        bottom: "assets/StepDown Bottom.png",
-        routing2d: "assets/StepDown Routing.png",
-        schematic: "assets/StepDown Schematic.png"
+        top: "assets/atmega_top.png",
+        //bottom: "assets/StepDown Bottom.png",
+        routing2d: "assets/atmega_routing.png",
+        //schematic: "assets/StepDown Schematic.png"
       },
-      view3d: "assets/PowerConverter.glb",
+      //view3d: "assets/PowerConverter.glb",
       //github: "https://github.com/example/pcb-beta"
     }
-    
     
   ];
 
@@ -799,6 +815,8 @@ modalModelViewer.addEventListener('error', (event) => {
 
 </body>
 </html>
+
+
 
 
 
