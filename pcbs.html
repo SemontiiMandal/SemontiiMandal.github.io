@@ -520,8 +520,23 @@
       //github: "https://github.com/example/pcb-gamma"
     },  
 
-    {
+     {
       id: 2,
+      title: "STM32 Board",
+      description: "Custom Board with STM32F411CEU6",
+      images: {
+        top: "assets/stm32_board_top.png",
+        bottom: "assets/stm32_board_bottom.png",
+        //routing2d: "assets/atmega_routing.png",
+        schematic: "assets/stm32_board_schematic.png"
+      },
+      view3d: "assets/stm32_board.step.glb",
+      //github: "https://github.com/example/pcb-beta"
+    }
+    ,
+
+    {
+      id: 3,
       title: "Power Converter",
       description: "5V to 3.3V Step Down",
       images: {
@@ -535,7 +550,7 @@
     },
   
   {
-      id: 3,
+      id: 4,
       title: "LED Chaser",
       description: "An LED Chaser PCB",
       images: {
@@ -549,7 +564,7 @@
     },
     
     {
-      id: 4,
+      id: 5,
       title: "ATmega Board",
       description: "Custom Board with ATmega328P",
       images: {
@@ -815,6 +830,8 @@ modalModelViewer.addEventListener('error', (event) => {
 
 </body>
 </html>
+
+
 
 
 
